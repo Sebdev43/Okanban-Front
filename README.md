@@ -1,18 +1,6 @@
 # oKanban-front, jour 1
 
-## Static force
-
-Pour ce projet, nous n'allons pas utiliser de serveur !
-
-En effet, tout va se passer dans le navigateur, on va donc coder directement des fichiers statiques. Retour en S2, en quelques sortes !
-
-Petit rappel, pour ouvrir le site dans un navigateur, utlise la ligne de commande :
-
-- `google-chrome index.html`
-- ou bien `chromium index.html`
-- ou encore `chromium-browser index.html`
-- ou bien encore `firefox index.html`
-- ou n'importe quel autre navigateur si ça te fait plaisir :wink:
+---
 
 ## Prise en main du code
 
@@ -33,13 +21,13 @@ Il faut que lorsqu'on clique sur le bouton, la modale apparaisse. À toi de joue
 <details>
 <summary>De l'aide.</summary>
 
-- Commence par ajouter une méthode `addListenerToActions` dans l'objet app, puis appelle cette méthode dans `app.init`.
+- Commence par ajouter une méthode `addListenerToActions` dans l'objet app, puis appelle cette méthode dans `init`.
 - Dans cette méthode, récupère le bouton grace à `document.getElementById`, et ajoute-lui un écouteur d'évènement, sur l'event "click", et qui déclenche `app.showAddListModal`.
 - Il faut maintenant ajouter la méthode `showAddListModal` à l'objet app, et l'implémenter !
 - Dans la méthode `showAddListModal` :
   - Récupère la div modale, toujours grâce à `document.getElementById`
   - [La doc de Bulma](https://bulma.io/documentation/components/modal/) nous dit que pour afficher une modale, il faut lui ajouter la classe `is-active`.
-  
+
 </details>
 
 ## Deuxième interaction : fermer la modale
@@ -51,7 +39,7 @@ Repère les 2 boutons ayant la classe "close" dans la modale. En cliquant sur un
 
 Inspire toi de ce qui a été fait à l'étape précédente :
 
-- Dans la méthode `addListenerToActions`, récupère tous les boutons "close" (grace à `document.querySelectorAll`, par exemple), et ajoute leur un écouteur d'évenement qui déclenche `app.hideModals`.
+- Dans la méthode `addListenerToActions`, récupère tous les boutons "close" (grace à `document.querySelectorAll`, par exemple), et ajoute leur un écouteur d'évenement qui déclenche `hideModals`.
 - Il te reste alors à coder `hideModals`, qui doit enlever la classe "is-active" à toutes les modales (oui, c'est un poil bourrin, mais ça évitera d'avoir à le refaire pour chacune des modales qu'on va rajouter).
 
 </details>
@@ -128,8 +116,8 @@ Ensuite, valider le formulaire doit ajouter une nouvelle carte dans le DOM.
 
 ### petit souci de dynamisation
 
-Tu as peut-être remarqué que si on crée une nouvelle liste, puis qu'on clique sur le "+", rien ne se passe : c'est normal, la liste a été créée _après_ que les écouteur aient été ajoutés.
+Tu as peut-être remarqué que si on crée une nouvelle liste, puis qu'on clique sur le "+", rien ne se passe : c'est normal, la liste a été créée *après* que les écouteur aient été ajoutés.
 
 Il faut donc modifier `app.makeListInDOM`, pour ajouter l'écouteur sur le bouton "+" directement au moment de la création de la nouvelle liste !
 
-## Fin du jour 1 !
+## Fin du jour 1
