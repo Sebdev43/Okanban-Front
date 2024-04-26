@@ -39,6 +39,7 @@
                             <div
                                 class="column is-one-quarter panel"
                                 data-list-id="A"
+                                data-user="laurent"
                             >
                                 <div class="panel-heading has-background-info">
                                     <div class="columns">
@@ -308,6 +309,8 @@
             </div>
         </section>
 
+        <!--  ADD LIST MODAL -->
+
         <div class="modal" id="addListModal">
             <div class="modal-background"></div>
             <div class="modal-card">
@@ -344,7 +347,51 @@
                 </form>
             </div>
         </div>
+        <!-- END LIST MODAL -->
 
+        <!-- CARD MODAL -->
+        <div class="modal" id="addCardModal">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <form method="POST">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Ajouter une carte</p>
+                        <button
+                            class="delete close"
+                            type="button"
+                            aria-label="close"
+                        ></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <div class="field">
+                            <!-- input pour l'ID de la liste à laquelle appartient la carte-->
+                            <input type="hidden" name="list_id" value="" />
+
+                            <label class="label">Nom</label>
+                            <div class="control">
+                                <!-- "name=content pour correspondre à notre API" -->
+                                <input
+                                    type="text"
+                                    class="input"
+                                    name="content"
+                                    value=""
+                                    placeholder="Nom de la liste"
+                                />
+                            </div>
+                        </div>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success">Save changes</button>
+                        <button class="button close" type="button">
+                            Cancel
+                        </button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+        <!-- END CARD MODAL -->
+
+        <!-- LIST TEMPLATE -->
         <template id="list-template">
             <div class="column is-one-quarter panel" data-list-id="A">
                 <div class="panel-heading has-background-info">
@@ -391,6 +438,29 @@
                 </div>
             </div>
         </template>
+        <!-- FIN LIST TEMPLATE -->
+
+        <!-- CARD TEMPLATE -->
+        <template id="card-template">
+            <div class="box" data-card-id="M">
+                <div class="columns">
+                    <div class="column" slot="card-title">Brancher l'API</div>
+                    <div class="column is-narrow">
+                        <a href="#">
+                            <span class="icon is-small has-text-primary">
+                                <i class="fas fa-pencil-alt"></i>
+                            </span>
+                        </a>
+                        <a href="#">
+                            <span class="icon is-small has-text-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!-- FIN CARD TEMPLATE -->
 
         <!-- Chargement de mon fichier JS -->
 

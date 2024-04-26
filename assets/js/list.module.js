@@ -35,6 +35,9 @@ function makeListInDOM(event) {
     const clone = document.importNode(listTemplate.content, true);
 
     clone.querySelector('[slot="title"]').textContent = data.title;
+
+    // ! On doit ajouter un event listener aprèes avoir créer la liste
+
     document.querySelector('.card-lists').appendChild(clone);
 
     hideModals();

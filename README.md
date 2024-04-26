@@ -76,7 +76,7 @@ Dans la méthode `app.makeListInDOM`, il faut ensuite :
 
 *Note* : rien ne t'empêche de rajouter des classes ou des identifiants dans le HTML pour te faciliter la vie...
 
-*Note 2* : à la fin de la méthode, on ferme toutes les modales !
+*Note 2* : à la fin de la méthode, on ferme toutes les modales ! (et on resete le form)
 
 ## Fabriquer une nouvelle carte
 
