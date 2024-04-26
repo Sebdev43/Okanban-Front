@@ -1,4 +1,4 @@
-import { hideModals } from './utils.module.js';
+import { addEventsToList, hideModals } from './utils.module.js';
 
 function handleAddListForm() {
     const addListForm = document.querySelector('#addListModal form');
@@ -36,10 +36,13 @@ function makeListInDOM(event) {
 
     clone.querySelector('[slot="title"]').textContent = data.title;
 
-    // ! On doit ajouter un event listener aprèes avoir créer la liste
+    const d = clone.querySelector('.panel');
+    d.setAttribute('data-list-id', Date.now());
 
     document.querySelector('.card-lists').appendChild(clone);
 
+    // ! On doit ajouter un event listener après avoir créer la liste
+    addEventsToList();
     hideModals();
     event.target.reset();
 }

@@ -13,13 +13,17 @@ function addListenerToActions() {
     });
 
     // AJOUT DE CARTES
+    addEventsToList();
+
+    handleAddListForm();
+    handleAddCardForm();
+}
+
+function addEventsToList() {
     const addCardBtns = document.querySelectorAll('.panel a.is-pulled-right');
     for (const btn of addCardBtns) {
         btn.addEventListener('click', showAddCardModal);
     }
-
-    handleAddListForm();
-    handleAddCardForm();
 }
 
 // gérer avec un event.target
@@ -28,4 +32,4 @@ function hideModals() {
     document.getElementById('addCardModal').classList.remove('is-active');
 }
 
-export { addListenerToActions, hideModals };
+export { addListenerToActions, hideModals, addEventsToList };

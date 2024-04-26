@@ -34,7 +34,7 @@ function makeCardInDOM(event) {
     // On a l'info data.listId qui correspond à une liste sur le DOM
 
     const theGoodList = document.querySelector(
-        `[data-list-id=${data.list_id}]`
+        `[data-list-id="${data.list_id}"]`
     );
 
     // On doit ajouter un event listener après avoir créer la carte
