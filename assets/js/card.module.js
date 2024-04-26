@@ -21,27 +21,17 @@ function handleAddCardForm() {
 
 function makeCardInDOM(event) {
     event.preventDefault();
-
     const data = Object.fromEntries(new FormData(event.target));
-
-    const cardTemplate = document.getElementById('card-template');
-    // ! On précise true pour obtenir tout ce qui est contenu dans le template
-    const clone = document.importNode(cardTemplate.content, true);
-
-    clone.querySelector('[slot=card-title]').textContent = data.content;
-
-    /* On doit sélectionne la liste correcte pour ajouter notre carte sur la DOM */
-    // On a l'info data.listId qui correspond à une liste sur le DOM
-
-    const theGoodList = document.querySelector(
-        `[data-list-id="${data.list_id}"]`
-    );
-
-    // On doit ajouter un event listener après avoir créer la carte
-
-    theGoodList.querySelector('.panel-block').appendChild(clone);
-
-    hideModals();
+    createCardInDOM(data, document.querySelector(`[data-list-id="${data.list_id}"] .panel-block`));
     event.target.reset();
 }
-export { showAddCardModal, makeCardInDOM, handleAddCardForm };
+function createCardInDOM(card, container) {
+    const cardTemplate = document.getElementById('card-template').content.cloneNode(true);
+    cardTemplate.querySelector('[slot=card-title]').textContent = card.content;  
+    cardTemplate.querySelector('.box').setAttribute('data-card-id', card.id);  
+    cardTemplate.querySelector('.box').style.backgroundColor = card.color;  
+    container.appendChild(cardTemplate);
+    hideModals();
+}
+
+export { showAddCardModal, makeCardInDOM, handleAddCardForm, createCardInDOM };

@@ -1,4 +1,5 @@
 import { addEventsToList, hideModals } from './utils.module.js';
+import { createCardInDOM } from './card.module.js';
 
 function handleAddListForm() {
     const addListForm = document.querySelector('#addListModal form');
@@ -46,5 +47,26 @@ function makeListInDOM(event) {
     hideModals();
     event.target.reset();
 }
+function createListInDOM(list) {
+    console.log("Données de la liste récupérée:", list);  
 
-export { handleAddListForm, showAddListModal };
+    const listTemplate = document.getElementById('list-template').content.cloneNode(true);
+    listTemplate.querySelector('[slot="title"]').textContent = list.title;  
+
+    listTemplate.querySelector('.panel').setAttribute('data-list-id', list.id);
+
+    const cardContainer = listTemplate.querySelector('.panel-block');
+    // Vérifie si la liste contient des cartes et les ajoute
+    if (list.cards && Array.isArray(list.cards)) {
+        list.cards.forEach(card => {
+            createCardInDOM(card, cardContainer);  
+        });
+    }
+
+    document.querySelector('.card-lists').appendChild(listTemplate);
+}
+
+
+
+
+export { handleAddListForm, showAddListModal, createListInDOM };
