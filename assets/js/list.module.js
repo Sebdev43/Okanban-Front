@@ -36,6 +36,7 @@ function makeListInDOM(event) {
 
     clone.querySelector('[slot="title"]').textContent = data.title;
 
+    // Oh LA LA LA LA ! :-O
     const d = clone.querySelector('.panel');
     d.setAttribute('data-list-id', Date.now());
 
