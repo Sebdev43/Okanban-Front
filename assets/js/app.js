@@ -1,5 +1,5 @@
 // * Quand on importe avec ESM : on doit préciser l'extension du fichier
-import { addListenerToActions } from './list.module.js';
+import { addListenerToActions } from './utils.module.js';
 
 function init() {
     addListenerToActions();
