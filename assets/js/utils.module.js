@@ -15,16 +15,26 @@ function addListenerToActions() {
     // AJOUT DE CARTES
     addEventsToList();
 
-    handleAddListForm();
-    handleAddCardForm();
+    // Attacher handleAddListForm correctement si nécessaire
+    const addListForm = document.querySelector('#addListModal form');
+    if (addListForm) {
+        addListForm.addEventListener('submit', handleAddListForm);
+    }
+    
+    // Attacher handleAddCardForm correctement
+    const addCardForm = document.querySelector('#addCardModal form');
+    if (addCardForm) {
+        addCardForm.addEventListener('submit', handleAddCardForm);
+    }
 }
 
 function addEventsToList() {
     const addCardBtns = document.querySelectorAll('.panel a.is-pulled-right');
-    for (const btn of addCardBtns) {
+    addCardBtns.forEach((btn) => {
         btn.addEventListener('click', showAddCardModal);
-    }
+    });
 }
+
 
 // gérer avec un event.target
 function hideModals() {

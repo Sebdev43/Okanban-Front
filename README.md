@@ -45,6 +45,19 @@ Modifie les méthodes `handleAddListForm` et `handleAddCardForm` :
 - Utilise la réponse de fetch pour créer les listes/cartes, ou afficher une erreur (avec `alert`) si besoin.
 - Pense à tester le code de retour avec `response.status` (il DOIT être égal à 200, sinon on a une erreur).
 
+pourquoi j'ai pas de données ?!
+Tu as beau envoyer des données, rien n'apparrait côté back. C'est probablement dû au format dans lequel tu envoie les données !
+
+En effet, FormData utilise le format multipart/form-data. Or, ce format n'est pas géré par Express !
+
+Il faut rajouter un middleware dans l'api : multer.
+
+De l'aide pour multer
+const multer = require('multer');
+const bodyParser = multer();
+
+// on utlise .none() pour dire qu'on attends pas de fichier, uniquement des inputs "classiques" !
+app.use( bodyParser.none() );
 ---
 
 ## oKanban-front, jour 1
