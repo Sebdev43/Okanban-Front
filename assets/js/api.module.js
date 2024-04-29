@@ -154,8 +154,37 @@ async function updateCard(cardId, newData) {
         return null;
     }
 }
+async function deleteCard(cardId) {
+    try {
+        const token = document.head.querySelector(
+            'meta[name=csrf-token]'
+        ).content;
+        const response = await fetch(`${config.base_url}/cards/${cardId}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            }
+        });
+
+       
+        if (response.ok) {
+            console.log('La carte a été supprimée avec succès.');
+        } else {
+           
+            throw new Error('La suppression de la carte a échoué.');
+        }
+    } catch (error) {
+        
+        console.error('Une erreur s\'est produite lors de la suppression de la carte:', error);
+      
+        alert('Une erreur s\'est produite lors de la suppression de la carte. Veuillez réessayer plus tard.');
+    }
+}
 
 
 
 
-export { getListsFromAPI, createList, createCard, getToken, updateList, updateCard };
+
+export { getListsFromAPI, createList, createCard, getToken, updateList, updateCard, deleteCard };
