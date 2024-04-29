@@ -1,4 +1,18 @@
 import { addEventsToList, hideModals } from './utils.module.js';
+import { getListsFromAPI } from './api.module.js';
+import { makeCardInDOM } from './card.module.js';
+
+async function getLists() {
+    const data = await getListsFromAPI();
+
+    for (const list of data) {
+        makeListInDOM(list);
+
+        for (const card of list.cards) {
+            makeCardInDOM(card);
+        }
+    }
+}
 
 function handleAddListForm() {
     const addListForm = document.querySelector('#addListModal form');
@@ -10,8 +24,8 @@ function showAddListModal() {
     document.getElementById('addListModal').classList.add('is-active');
 }
 
-function makeListInDOM(event) {
-    event.preventDefault();
+function makeListInDOM(data) {
+    // event.preventDefault();
 
     // * Le constructeur FormData prend en argument un objet Form ou rien
     // * Quand on lui passe un arg, il se débrouiller pour parser les valeurs du formulaire et nous retourne une instance de FormData
@@ -28,7 +42,8 @@ function makeListInDOM(event) {
     //     console.log(entry);
     // }
 
-    const data = Object.fromEntries(new FormData(event.target));
+    // * temp comment
+    // const data = Object.fromEntries(new FormData(event.target));
 
     const listTemplate = document.getElementById('list-template');
     // ! On précise true pour obtenir tout ce qui est contenu dans le template
@@ -36,16 +51,17 @@ function makeListInDOM(event) {
 
     clone.querySelector('[slot="title"]').textContent = data.title;
 
-    // Oh LA LA LA LA ! :-O
-    const d = clone.querySelector('.panel');
-    d.setAttribute('data-list-id', Date.now());
+    // ! ajoute un attribut data-list-id sur la liste, ce qui nous permet d'identifier une liste avec l'information contenue dans une carte (list_id)
+    clone.querySelector('.panel').setAttribute('data-list-id', data.id);
 
     document.querySelector('.card-lists').appendChild(clone);
 
     // ! On doit ajouter un event listener après avoir créer la liste
     addEventsToList();
     hideModals();
-    event.target.reset();
+    // *
+    // * temp comment
+    // event.target.reset();
 }
 
-export { handleAddListForm, showAddListModal };
+export { handleAddListForm, showAddListModal, getLists };

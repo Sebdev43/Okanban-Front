@@ -19,10 +19,10 @@ function handleAddCardForm() {
     addListForm.addEventListener('submit', makeCardInDOM);
 }
 
-function makeCardInDOM(event) {
-    event.preventDefault();
+function makeCardInDOM(data) {
+    // event.preventDefault();
 
-    const data = Object.fromEntries(new FormData(event.target));
+    // const data = Object.fromEntries(new FormData(event.target));
 
     const cardTemplate = document.getElementById('card-template');
     // ! On précise true pour obtenir tout ce qui est contenu dans le template
@@ -33,6 +33,8 @@ function makeCardInDOM(event) {
     /* On doit sélectionne la liste correcte pour ajouter notre carte sur la DOM */
     // On a l'info data.listId qui correspond à une liste sur le DOM
 
+    console.log(data.list_id);
+
     const theGoodList = document.querySelector(
         `[data-list-id="${data.list_id}"]`
     );
@@ -41,7 +43,8 @@ function makeCardInDOM(event) {
 
     theGoodList.querySelector('.panel-block').appendChild(clone);
 
-    hideModals();
-    event.target.reset();
+    // * temp comment
+    // hideModals();
+    // event.target.reset();
 }
 export { showAddCardModal, makeCardInDOM, handleAddCardForm };

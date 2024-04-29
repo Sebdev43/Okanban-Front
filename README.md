@@ -1,5 +1,7 @@
 # oKanban-front, jour 2
 
+> **Le port 5000 n'est pas disponible sur les macs**
+
 ## Dynamic data
 
 C'est l'heure de brancher notre application sur les vrais données !
@@ -10,9 +12,9 @@ Maintenant qu'on a nos méthodes prêtes à l'emploi, tu peux enlever toutes les
 
 #### Récupérer les vraies listes
 
-Commence par ajouter une propriété `base_url` dans app. Sa valeur est l'url "de base" de ton API oKanban !
+Commence par ajouter une propriété `base_url`. Sa valeur est l'url "de base" de ton API oKanban !
 
-Crée ensuite une méthode `getListsFromAPI` dans app. Pour faciliter la suite, cette fonction est `async`.
+Crée ensuite une méthode `getListsFromAPI`. Pour faciliter la suite, cette fonction est `async`.
 
 Dans cette méthode, utilise [fetch](https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch) pour appeller la route "GET /lists" de l'api.
 
