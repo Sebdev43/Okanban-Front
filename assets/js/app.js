@@ -1,8 +1,10 @@
 // * Quand on importe avec ESM : on doit préciser l'extension du fichier
 import { addListenerToActions } from './utils.module.js';
 import { getLists } from './list.module.js';
+import { getToken } from './api.module.js';
 
 function init() {
+    getToken();
     getLists();
     addListenerToActions();
 }

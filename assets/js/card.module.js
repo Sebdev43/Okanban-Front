@@ -1,4 +1,5 @@
 import { hideModals } from './utils.module.js';
+import { createCard } from './api.module.js';
 
 function showAddCardModal(event) {
     document.getElementById('addCardModal').classList.add('is-active');
@@ -16,14 +17,17 @@ function showAddCardModal(event) {
 function handleAddCardForm() {
     const addListForm = document.querySelector('#addCardModal form');
 
-    addListForm.addEventListener('submit', makeCardInDOM);
+    addListForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(event.target));
+        const card = await createCard(data);
+
+        makeCardInDOM(card);
+        event.target.reset();
+    });
 }
 
 function makeCardInDOM(data) {
-    // event.preventDefault();
-
-    // const data = Object.fromEntries(new FormData(event.target));
-
     const cardTemplate = document.getElementById('card-template');
     // ! On précise true pour obtenir tout ce qui est contenu dans le template
     const clone = document.importNode(cardTemplate.content, true);
@@ -43,8 +47,6 @@ function makeCardInDOM(data) {
 
     theGoodList.querySelector('.panel-block').appendChild(clone);
 
-    // * temp comment
-    // hideModals();
-    // event.target.reset();
+    hideModals();
 }
 export { showAddCardModal, makeCardInDOM, handleAddCardForm };

@@ -1,5 +1,5 @@
 import { addEventsToList, hideModals } from './utils.module.js';
-import { getListsFromAPI } from './api.module.js';
+import { getListsFromAPI, createList } from './api.module.js';
 import { makeCardInDOM } from './card.module.js';
 
 async function getLists() {
@@ -17,7 +17,17 @@ async function getLists() {
 function handleAddListForm() {
     const addListForm = document.querySelector('#addListModal form');
 
-    addListForm.addEventListener('submit', makeListInDOM);
+    addListForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        // On doit créer une liste ici, la requête doit nous retourner une liste
+
+        const data = Object.fromEntries(new FormData(event.target));
+        const list = await createList(data);
+
+        makeListInDOM(list);
+
+        event.target.reset();
+    });
 }
 
 function showAddListModal() {
@@ -42,9 +52,6 @@ function makeListInDOM(data) {
     //     console.log(entry);
     // }
 
-    // * temp comment
-    // const data = Object.fromEntries(new FormData(event.target));
-
     const listTemplate = document.getElementById('list-template');
     // ! On précise true pour obtenir tout ce qui est contenu dans le template
     const clone = document.importNode(listTemplate.content, true);
@@ -60,8 +67,6 @@ function makeListInDOM(data) {
     addEventsToList();
     hideModals();
     // *
-    // * temp comment
-    // event.target.reset();
 }
 
 export { handleAddListForm, showAddListModal, getLists };
