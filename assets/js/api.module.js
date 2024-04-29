@@ -15,8 +15,9 @@ async function getListsFromAPI() {
         }
 
         const data = await response.json();
-
+        console.log(data);
         return data;
+        
     } catch (error) {
         console.log(error);
         // document.location.href = 'http://localhost:3000/error.html';
@@ -126,4 +127,35 @@ async function updateList(listId, data) {
     }
 }
 
-export { getListsFromAPI, createList, createCard, getToken, updateList };
+
+async function updateCard(cardId, newData) {
+    try {
+        const token = document.head.querySelector('meta[name=csrf-token]').content;
+
+        const response = await fetch(`${config.base_url}/cards/${cardId}`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            },
+            body: JSON.stringify(newData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la mise à jour de la carte');
+        }
+
+        const updatedCard = await response.json();
+
+        return updatedCard;
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de la carte :', error);
+        return null;
+    }
+}
+
+
+
+
+export { getListsFromAPI, createList, createCard, getToken, updateList, updateCard };

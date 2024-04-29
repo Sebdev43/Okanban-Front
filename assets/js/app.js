@@ -2,6 +2,7 @@
 import { addListenerToActions } from './utils.module.js';
 import { getLists, setupListEditing } from './list.module.js';
 import { getToken } from './api.module.js';
+import { setupCardEditing } from './card.module.js';
 
 
 function init() {
@@ -10,6 +11,7 @@ function init() {
     getLists();
     addListenerToActions();
     setupListEditing();
+    setupCardEditing();
     console.log('Init function completed');
 }
 
