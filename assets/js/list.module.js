@@ -1,6 +1,9 @@
 import { addEventsToList, hideModals } from './utils.module.js';
-import { getListsFromAPI, createList } from './api.module.js';
+import { getListsFromAPI, createList, updateList } from './api.module.js';
 import { makeCardInDOM } from './card.module.js';
+
+
+
 
 async function getLists() {
     const data = await getListsFromAPI();
@@ -60,6 +63,9 @@ function makeListInDOM(data) {
 
     // ! ajoute un attribut data-list-id sur la liste, ce qui nous permet d'identifier une liste avec l'information contenue dans une carte (list_id)
     clone.querySelector('.panel').setAttribute('data-list-id', data.id);
+    const form = clone.querySelector('form');
+    form.dataset.listId = data.id;
+    form.querySelector('input[name="list-id"]').value = data.id;
 
     document.querySelector('.card-lists').appendChild(clone);
 
@@ -69,4 +75,49 @@ function makeListInDOM(data) {
     // *
 }
 
-export { handleAddListForm, showAddListModal, getLists };
+function setupListEditing() {
+    const listContainer = document.querySelector('.card-lists');
+
+    listContainer.addEventListener('dblclick', function(event) {
+        if (event.target.tagName === 'H2' && event.target.classList.contains('has-text-white')) {
+            const h2 = event.target;
+            const editForm = h2.nextElementSibling;
+            const listId = editForm.dataset.listId; // Récupération de l'ID de la liste depuis les données de l'élément form
+            h2.classList.add('is-hidden');
+            editForm.classList.remove('is-hidden');
+            editForm.elements['list-name'].value = h2.textContent;
+            editForm.elements['list-id'].value = listId; // Définition de la valeur de l'input list-id avec l'identifiant de la liste
+        }
+    });
+
+    listContainer.addEventListener('submit', async function(event) {
+        if (event.target.tagName === 'FORM' && !event.target.classList.contains('is-hidden')) {
+            event.preventDefault();
+            const form = event.target;
+            const title = form.elements['list-name'].value;
+            const listId = form.elements['list-id'].value; // Récupération de l'ID de la liste depuis l'input caché
+            try {
+                const updatedList = await updateList(listId, { title }); // Appel de la méthode updateList
+                if (updatedList) {
+                    const h2 = form.previousElementSibling;
+                    h2.textContent = title;
+                    h2.classList.remove('is-hidden');
+                    form.classList.add('is-hidden');
+                } else {
+                    throw new Error('Erreur lors de la mise à jour de la liste');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour de la liste:', error);
+                alert('Erreur lors de la mise à jour de la liste');
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
+export { handleAddListForm, showAddListModal, getLists, setupListEditing };

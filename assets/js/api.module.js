@@ -101,4 +101,29 @@ async function createCard(data) {
     }
 }
 
-export { getListsFromAPI, createList, createCard, getToken };
+async function updateList(listId, data) {
+    try {
+        const token = document.head.querySelector(
+            'meta[name=csrf-token]'
+        ).content;
+        const response = await fetch(`${config.base_url}/lists/${listId}`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            throw new Error('Echec de la mise à jour de la liste');
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de la liste');
+        return null;
+    }
+}
+
+export { getListsFromAPI, createList, createCard, getToken, updateList };
