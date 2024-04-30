@@ -58,4 +58,31 @@ async function update(id, data) {
     }
 }
 
-export { createCard, update };
+async function destroy(id) {
+    try {
+        const token = document.head.querySelector(
+            'meta[name=csrf-token]'
+        ).content;
+
+        const response = await fetch(`${config.base_url}/cards/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            },
+        });
+
+        if (!response.ok) {
+            throw response;
+        }
+
+        const card = await response.json();
+
+        return card;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { createCard, update, destroy };

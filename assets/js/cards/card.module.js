@@ -1,5 +1,5 @@
 import { hideModals } from '../utils.module.js';
-import { createCard, update } from './api.cards.module.js';
+import { createCard, update, destroy } from './api.cards.module.js';
 
 function showAddCardModal(event) {
     document.getElementById('addCardModal').classList.add('is-active');
@@ -42,8 +42,9 @@ function makeCardInDOM(data) {
     const links = card.querySelectorAll('a');
     // * QuerySelectorAll retourne un nodelist : on prend le premier pour éditer et le second pour effacer
     const editBtn = links[0];
-
     editBtn.addEventListener('click', editCard);
+    const deleteBtn = links[1];
+    deleteBtn.addEventListener('click', deleteCard);
 
     /* On doit sélectionne la liste correcte pour ajouter notre carte sur la DOM */
     // On a l'info data.listId qui correspond à une liste sur le DOM
@@ -84,6 +85,15 @@ async function updateCard(event) {
     contentElem.textContent = updatedCard.content;
     contentElem.classList.remove('is-hidden');
     form.reset();
+}
+
+async function deleteCard(event) {
+    const btn = event.target;
+    const card = btn.closest('.box');
+    const cardId = card.getAttribute('data-card-id');
+    await destroy(cardId);
+
+    card.remove();
 }
 
 export { showAddCardModal, makeCardInDOM, handleAddCardForm };
