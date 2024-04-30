@@ -85,4 +85,19 @@ async function destroy(id) {
     }
 }
 
-export { createCard, update, destroy };
+async function updateCardOrder(cardId, newListId, newPosition) {
+    const updateData = {
+        list_id: newListId,
+        position: newPosition
+    };
+    try {
+        const response = await update(cardId, updateData);
+        console.log("Card updated successfully", response);
+    } catch (error) {
+        console.error("Error updating card:", error);
+    }
+}
+
+
+
+export { createCard, update, destroy, updateCardOrder };

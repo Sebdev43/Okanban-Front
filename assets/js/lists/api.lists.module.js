@@ -84,4 +84,18 @@ async function updateList(id, data) {
     }
 }
 
-export { getListsFromAPI, createList, updateList };
+async function updateListOrder(listId, newPosition) {
+    const updateData = {
+        position: newPosition 
+    };
+    try {
+        const updatedList = await updateList(listId, updateData);
+        console.log("Liste mise à jour avec succès:", updatedList);
+    } catch (error) {
+        console.error("Erreur lors de la mise à jour de la liste:", error);
+    }
+}
+
+
+
+export { getListsFromAPI, createList, updateList, updateListOrder };
