@@ -1,4 +1,33 @@
-# oKanban-front, jour 3
+# oKanban-front, jour 4
+
+On termine les fonctionnalités de notre oKanban !
+
+## Les drag and drop
+
+Pour changer l'ordre des cartes dans une liste, et l'ordre des listes dans la page, tu peux utiliser le drag'n'drop ("glisser-déposer", en français).
+
+Ici encore, 2 solutions s'offrent à toi :
+
+- Tout faire à la main! Il va falloir jouer avec 4 types d'évènement, et définir un bon paquet de paramètres. Tu peux lire [la page de MDN](https://developer.mozilla.org/fr/docs/Web/API/API_HTML_Drag_and_Drop) pour t'aider, mais attends toi à de la difficulté !
+- Utiliser un plugin Javascript ! [SortableJS](https://github.com/SortableJS/Sortable), par exemple.
+
+Quelque soit la solution choisie, il faudra appeller l'API pour mettre à jour les infos de la carte/liste, et peut-être aussi des autres cartes/listes ! (et oui, si la carte numéro 1 devient la numéro 3, alors la numéro 2 devient... :thinking: )
+
+## Tags des cartes
+
+Plus qu'à nous occuper des tags !
+
+- Afficher les tags de chaque cartes (sous forme d'étiquettes par exemple. Bulma est ton ami 😉).
+- Associer un tag existant à une carte (va falloir réfléchir un peu !)
+- Enlever un tag d'une carte en double cliquant dessus.
+
+## Bonus (qui ne sera pas corrigé, ne pas se casser la tête avec)
+
+Faire le CRUD complet des tags (afficher tous les tags existants, ajouter un tag, modifier un tag, supprimer un tag).
+
+---
+
+## oKanban-front, jour 3
 
 > **Le port 5000 (API) n'est pas disponible sur les macs**
 

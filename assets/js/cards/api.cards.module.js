@@ -28,4 +28,34 @@ async function createCard(data) {
     }
 }
 
-export { createCard };
+async function update(id, data) {
+    try {
+        const token = document.head.querySelector(
+            'meta[name=csrf-token]'
+        ).content;
+
+        delete data['card-id'];
+
+        const response = await fetch(`${config.base_url}/cards/${id}`, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw response;
+        }
+
+        const card = await response.json();
+
+        return card;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { createCard, update };

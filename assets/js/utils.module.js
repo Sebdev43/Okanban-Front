@@ -42,7 +42,9 @@ function addEventsToList() {
         //     showEditListForm(event);
         // });
     }
-    const editListForms = document.querySelectorAll('.panel form');
+    const editListForms = document.querySelectorAll(
+        '.panel formµ.js-list-form'
+    );
     for (const form of editListForms) {
         form.addEventListener('submit', editList);
     }

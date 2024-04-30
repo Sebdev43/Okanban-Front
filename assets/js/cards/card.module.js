@@ -1,5 +1,5 @@
 import { hideModals } from '../utils.module.js';
-import { createCard } from './api.cards.module.js';
+import { createCard, update } from './api.cards.module.js';
 
 function showAddCardModal(event) {
     document.getElementById('addCardModal').classList.add('is-active');
@@ -33,11 +33,20 @@ function makeCardInDOM(data) {
     const clone = document.importNode(cardTemplate.content, true);
 
     clone.querySelector('[slot=card-title]').textContent = data.content;
+    const card = clone.querySelector('.box');
+    card.setAttribute('data-card-id', data.id);
+
+    const cardForm = card.querySelector('form.js-card-form');
+    cardForm.addEventListener('submit', updateCard);
+
+    const links = card.querySelectorAll('a');
+    // * QuerySelectorAll retourne un nodelist : on prend le premier pour éditer et le second pour effacer
+    const editBtn = links[0];
+
+    editBtn.addEventListener('click', editCard);
 
     /* On doit sélectionne la liste correcte pour ajouter notre carte sur la DOM */
     // On a l'info data.listId qui correspond à une liste sur le DOM
-
-    console.log(data.list_id);
 
     const theGoodList = document.querySelector(
         `[data-list-id="${data.list_id}"]`
@@ -49,4 +58,32 @@ function makeCardInDOM(data) {
 
     hideModals();
 }
+
+function editCard(event) {
+    const btn = event.target;
+    const card = btn.closest('.box');
+    const cardText = card.querySelector('.column');
+    const cardform = card.querySelector('form');
+    cardform.querySelector('input[type=hidden]').value =
+        card.getAttribute('data-card-id');
+    cardText.classList.add('is-hidden');
+    cardform.classList.remove('is-hidden');
+}
+
+async function updateCard(event) {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const data = Object.fromEntries(new FormData(form));
+
+    const updatedCard = await update(data['card-id'], data);
+
+    form.classList.add('is-hidden');
+    const contentElem = form.previousElementSibling;
+    contentElem.textContent = updatedCard.content;
+    contentElem.classList.remove('is-hidden');
+    form.reset();
+}
+
 export { showAddCardModal, makeCardInDOM, handleAddCardForm };
