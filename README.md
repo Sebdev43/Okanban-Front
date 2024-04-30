@@ -1,5 +1,15 @@
 # oKanban-front, jour 4
 
+1. On vous pose un problème
+2. ******** on comprend rien
+3. on va se documenter
+4. on code
+5. on débug
+6. on refactor le code car le senior est pas content
+7. on montre au senior qu'il a tort et il démissionne
+8. on prend sa place
+9. un junior prendra notre place
+
 On termine les fonctionnalités de notre oKanban !
 
 ## Les drag and drop

@@ -1,1 +1,1 @@
-- [ ] Expliquer le controller wrapper
+- [x] Expliquer le controller wrapper
