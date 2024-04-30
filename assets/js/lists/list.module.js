@@ -1,6 +1,6 @@
-import { addEventsToList, hideModals } from './utils.module.js';
-import { getListsFromAPI, createList } from './api.module.js';
-import { makeCardInDOM } from './card.module.js';
+import { addEventsToList, hideModals } from '../utils.module.js';
+import { getListsFromAPI, createList } from './api.lists.module.js';
+import { makeCardInDOM } from '../cards/card.module.js';
 
 async function getLists() {
     const data = await getListsFromAPI();
@@ -66,7 +66,6 @@ function makeListInDOM(data) {
     // ! On doit ajouter un event listener après avoir créer la liste
     addEventsToList();
     hideModals();
-    // *
 }
 
 export { handleAddListForm, showAddListModal, getLists };

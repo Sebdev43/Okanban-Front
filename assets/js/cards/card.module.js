@@ -1,5 +1,5 @@
-import { hideModals } from './utils.module.js';
-import { createCard } from './api.module.js';
+import { hideModals } from '../utils.module.js';
+import { createCard } from './api.cards.module.js';
 
 function showAddCardModal(event) {
     document.getElementById('addCardModal').classList.add('is-active');

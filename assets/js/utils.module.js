@@ -1,5 +1,5 @@
-import { handleAddListForm, showAddListModal } from './list.module.js';
-import { showAddCardModal, handleAddCardForm } from './card.module.js';
+import { handleAddListForm, showAddListModal } from './lists/list.module.js';
+import { showAddCardModal, handleAddCardForm } from './cards/card.module.js';
 
 // * peut-être bouger cette function ailleurs
 function addListenerToActions() {
@@ -14,7 +14,6 @@ function addListenerToActions() {
 
     // AJOUT DE CARTES
     addEventsToList();
-
     handleAddListForm();
     handleAddCardForm();
 }
