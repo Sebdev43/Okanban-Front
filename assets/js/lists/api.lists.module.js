@@ -53,4 +53,35 @@ async function createList(data) {
     }
 }
 
-export { getListsFromAPI, createList };
+async function updateList(id, data) {
+    // * on doit envoyer un requête à l'API pour mettre à jour une liste
+    // * on a besoin : du token, de la route, des infos de la liste
+    try {
+        const token = document.head.querySelector(
+            'meta[name=csrf-token]'
+        ).content;
+
+        const url = `${config.base_url}/lists/${id}`;
+        console.log(url);
+        const response = await fetch(url, {
+            method: 'PATCH',
+            credentials: 'include',
+            headers: {
+                // * attention, quand on envoie du json, il faut pas oublier le header Content-Type
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw response;
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { getListsFromAPI, createList, updateList };

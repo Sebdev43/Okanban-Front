@@ -2,6 +2,8 @@
 
 > **Le port 5000 (API) n'est pas disponible sur les macs**
 
+> **Attention, chrome(ium) bloque les requêtes avec cookies, il faut utiliser firefox**
+
 On continue le CRUD côté front...
 
 ## Éditer une liste

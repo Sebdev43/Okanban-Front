@@ -1,5 +1,5 @@
 import { addEventsToList, hideModals } from '../utils.module.js';
-import { getListsFromAPI, createList } from './api.lists.module.js';
+import { getListsFromAPI, createList, updateList } from './api.lists.module.js';
 import { makeCardInDOM } from '../cards/card.module.js';
 
 async function getLists() {
@@ -68,4 +68,53 @@ function makeListInDOM(data) {
     hideModals();
 }
 
-export { handleAddListForm, showAddListModal, getLists };
+function showEditListForm(event) {
+    // * On doit masquer le titre
+    // * Quand on utilise les events, l'élément qui a déclenché l'event est : event.target ou event.currentTarget
+    const titleElement = event.target;
+
+    // Dans l'énoncé, on nous demande de cacher le titre
+    // * titleElement.classList.add('is-hidden');
+    // * On doit afficher le form
+    const form = titleElement.nextElementSibling;
+    form.classList.remove('is-hidden');
+    // * On doit assigner au formulaire l'ID de la liste
+    const listId = titleElement.closest('.panel').getAttribute('data-list-id');
+    form.querySelector('input[type=hidden]').value = listId;
+}
+
+async function editList(event) {
+    // * on empêche le formulaire de recharger la page
+    event.preventDefault();
+    // * On récupère le formulaire
+    const form = event.target;
+    // * On créé un formData avec le form, on pourrait sélectionner les inputs à la main
+    const data = new FormData(form);
+    // * On fabrique un objet que notre API comprendra
+
+    const dataObj = {
+        // * la méthode .get est issue de l'objet formData; elle permet de récupérer les valeurs des entrées de formData
+        title: data.get('title'),
+    };
+
+    // * On attend la réponse de la BDD
+    const newList = await updateList(data.get('list-id'), dataObj);
+
+    // * On récupère le h2 qui est l'élément qui précède la form sur le DOM
+    const titleElement = form.previousElementSibling;
+    // * On met le à jour le texte du titre
+    titleElement.textContent = newList.title;
+    // * on réaffiche le titre
+    titleElement.classList.remove('is-hidden');
+    // * On cache le form et on vide les inputs
+    form.classList.add('is-hidden');
+    form.reset();
+}
+
+export {
+    handleAddListForm,
+    showAddListModal,
+    showEditListForm,
+    editList,
+    getLists,
+};
