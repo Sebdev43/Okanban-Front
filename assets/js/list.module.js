@@ -1,5 +1,5 @@
 import { addEventsToList, hideModals } from './utils.module.js';
-import { getListsFromAPI, createList, updateList } from './api.module.js';
+import { getListsFromAPI, createList, updateList, deleteList } from './api.module.js';
 import { makeCardInDOM } from './card.module.js';
 
 
@@ -113,11 +113,34 @@ function setupListEditing() {
         }
     });
 }
+function setupListDeletion() {
+    console.log('La fonction setupCardDeletion() est appelée.');
+
+    const listContainers = document.querySelector('.columns');
+    console.log('cardContainers:', listContainers);
+
+    cardContainers.addEventListener('click', async function(event) {
+        console.log("Un clic a été détecté");
+        event.preventDefault();
+        
+        const deleteIcon = event.target.closest('.delete-list');
+        console.log("deleteIcon:", deleteIcon);
+
+        if (deleteIcon) {
+            const listContainer = deleteIcon.closest('.box');
+            const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cette liste ?");
+            if (confirmation) {
+                const listId = listContainer.dataset.cardId;
+                deleteList(listId); // Appeler la fonction pour supprimer la carte
+                listContainer.remove(); // Supprimer l'élément de la carte de l'interface utilisateur
+            }
+        }
+    });
+}
 
 
 
 
 
 
-
-export { handleAddListForm, showAddListModal, getLists, setupListEditing };
+export { handleAddListForm, showAddListModal, getLists, setupListEditing, setupListDeletion };

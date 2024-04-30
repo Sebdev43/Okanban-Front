@@ -102,7 +102,7 @@ function setupCardEditing() {
 function setupCardDeletion() {
     console.log('La fonction setupCardDeletion() est appelée.');
 
-    const cardContainers = document.querySelector('.card-lists');
+    const cardContainers = document.querySelector('.box');
     console.log('cardContainers:', cardContainers);
 
     cardContainers.addEventListener('click', async function(event) {

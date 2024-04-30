@@ -182,9 +182,36 @@ async function deleteCard(cardId) {
         alert('Une erreur s\'est produite lors de la suppression de la carte. Veuillez réessayer plus tard.');
     }
 }
+async function deleteList(listId) {
+    try {
+        const token = document.head.querySelector(
+            'meta[name=csrf-token]'
+        ).content;
+        const response = await fetch(`${config.base_url}/lists/${listId}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            }
+        });
+
+       
+        if (response.ok) {
+            console.log('La liste a été supprimée avec succès.');
+        } else {
+           
+            throw new Error('La suppression de la liste a échoué.');
+        }
+    } catch (error) {
+        
+        console.error('Une erreur s\'est produite lors de la suppression de la liste:', error);
+      
+        alert('Une erreur s\'est produite lors de la suppression de la list. Veuillez réessayer plus tard.');
+    }
+}
 
 
 
 
-
-export { getListsFromAPI, createList, createCard, getToken, updateList, updateCard, deleteCard };
+export { getListsFromAPI, createList, createCard, getToken, updateList, updateCard, deleteCard, deleteList };
