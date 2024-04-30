@@ -15,10 +15,10 @@ async function getListsFromAPI() {
         }
 
         const data = await response.json();
-
+        console.log(data);
         return data;
     } catch (error) {
-        console.log(error);
+        console.log(response);
         // document.location.href = 'http://localhost:3000/error.html';
         // Faire une redirection ou retourner une message d'erreur
     }

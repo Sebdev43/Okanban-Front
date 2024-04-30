@@ -183,6 +183,7 @@
             <div class="box" data-card-id="M" >
                 <div class="columns">
                     <div class="column" slot="card-title">Brancher l'API</div>
+                    <div class="tags-container"></div>
                     <form method="POST" class="is-hidden js-card-form">
                         <input type="hidden" name="card-id" value="1" />
                         <div class="field has-addons">
@@ -195,6 +196,11 @@
                                     placeholder="Nom de la liste"
                                 />
                             </div>
+                            <select name="selected-tag">
+                            <option value="1">Tag 1</option>
+                            <option value="2">Tag 2</option>
+                            <option value="3">Tag 3</option>
+                            </select>
                             <div class="control">
                                 <button class="button is-small is-success">
                                     Valider
@@ -214,6 +220,7 @@
                             </span>
                         </a>
                     </div>
+                    
                 </div>
             </div>
         </template>

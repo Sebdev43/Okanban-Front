@@ -1,5 +1,6 @@
 import { hideModals } from '../utils.module.js';
-import { createCard, update, destroy } from './api.cards.module.js';
+import { createCard, update, destroy, associateTagWithCard } from './api.cards.module.js';
+import { config } from '../config.module.js';
 
 function showAddCardModal(event) {
     document.getElementById('addCardModal').classList.add('is-active');
@@ -29,36 +30,42 @@ function handleAddCardForm() {
 
 function makeCardInDOM(data) {
     const cardTemplate = document.getElementById('card-template');
-    // ! On précise true pour obtenir tout ce qui est contenu dans le template
     const clone = document.importNode(cardTemplate.content, true);
 
     clone.querySelector('[slot=card-title]').textContent = data.content;
     const card = clone.querySelector('.box');
     card.setAttribute('data-card-id', data.id);
 
+    const tagsContainer = clone.querySelector('.tags-container');
+
+    // Vérifiez si data.tags est défini et est un tableau avant de l'utiliser
+    if (Array.isArray(data.tags)) {
+        data.tags.forEach(tag => {
+            const tagElement = document.createElement('span');
+            tagElement.classList.add('tag');
+            tagElement.textContent = tag.name;
+            tagElement.style.backgroundColor = tag.color;
+            tagsContainer.appendChild(tagElement);
+        });
+    } else {
+        console.log('Aucun tag à afficher pour cette carte.');
+    }
+
     const cardForm = card.querySelector('form.js-card-form');
     cardForm.addEventListener('submit', updateCard);
 
     const links = card.querySelectorAll('a');
-    // * QuerySelectorAll retourne un nodelist : on prend le premier pour éditer et le second pour effacer
     const editBtn = links[0];
     editBtn.addEventListener('click', editCard);
     const deleteBtn = links[1];
     deleteBtn.addEventListener('click', deleteCard);
 
-    /* On doit sélectionne la liste correcte pour ajouter notre carte sur la DOM */
-    // On a l'info data.listId qui correspond à une liste sur le DOM
-
-    const theGoodList = document.querySelector(
-        `[data-list-id="${data.list_id}"]`
-    );
-
-    // On doit ajouter un event listener après avoir créer la carte
-
+    const theGoodList = document.querySelector(`[data-list-id="${data.list_id}"]`);
     theGoodList.querySelector('.panel-block').appendChild(clone);
 
     hideModals();
 }
+
 
 function editCard(event) {
     const btn = event.target;
@@ -75,17 +82,48 @@ async function updateCard(event) {
     event.preventDefault();
 
     const form = event.target;
-
     const data = Object.fromEntries(new FormData(form));
 
-    const updatedCard = await update(data['card-id'], data);
+    const cardId = parseInt(data['card-id']);
+    const selectedTagId = parseInt(data['selected-tag']);
 
-    form.classList.add('is-hidden');
-    const contentElem = form.previousElementSibling;
-    contentElem.textContent = updatedCard.content;
-    contentElem.classList.remove('is-hidden');
-    form.reset();
+    try {
+        
+        const response = await fetch(`${config.base_url}/cards/${cardId}`, { method: 'HEAD' });
+        const cardExists = response.ok;
+
+        if (!cardExists) {
+            
+            const newData = {
+                content: data['content'], 
+                listId: data['list-id'] 
+            };
+            const newCard = await createCard(newData);
+            makeCardInDOM(newCard); 
+        }
+
+        
+        const tagAssociation = await associateTagWithCard(cardId, selectedTagId);
+        console.log("Tag associé avec succès", tagAssociation);
+
+        
+        form.classList.add('is-hidden');
+        const cardBox = form.closest('.box'); 
+        const cardTitleDiv = cardBox.querySelector('[slot="card-title"]');
+        cardTitleDiv.classList.remove('is-hidden');
+        
+        form.reset();
+
+       
+        alert("Carte mise à jour avec succès !");
+    } catch (error) {
+        console.error(error);
+        alert("Erreur lors de la mise à jour de la carte : " + error.message);
+    }
 }
+
+
+
 
 async function deleteCard(event) {
     const btn = event.target;

@@ -97,7 +97,30 @@ async function updateCardOrder(cardId, newListId, newPosition) {
         console.error("Error updating card:", error);
     }
 }
+async function associateTagWithCard(cardId, tagId) {
+    try {
+        const token = document.head.querySelector('meta[name=csrf-token]').content;
+        
+        const response = await fetch(`${config.base_url}/cards/${cardId}/tags/${tagId}`, {
+            method: 'PUT', // Utilisation de POST pour créer la relation entre la carte et le tag
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': token,
+            },
+            body: JSON.stringify({}), // Aucun corps de requête nécessaire pour associer le tag avec la carte
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to associate tag with card');
+        }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
 
 
 
-export { createCard, update, destroy, updateCardOrder };
+
+export { createCard, update, destroy, updateCardOrder, associateTagWithCard };

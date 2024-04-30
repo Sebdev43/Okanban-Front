@@ -10,10 +10,11 @@ async function init() {
     console.log('ini');
     await getToken();
     await getLists();
+    
     addListenerToActions();
     setupDragAndDrop();
     setupCardDragAndDrop();
-    console.log('finished'); 
+    console.log('finished');
 }
 
 
