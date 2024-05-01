@@ -3,10 +3,11 @@ import {
     showAddListModal,
     showEditListForm,
     editList,
+    
 } from './lists/list.module.js';
 
 import { showAddCardModal, handleAddCardForm } from './cards/card.module.js';
-import Sortable from 'sortablejs';
+
 // * peut-être bouger cette function ailleurs
 function addListenerToActions() {
     // AJOUT DE LISTES

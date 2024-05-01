@@ -1,5 +1,5 @@
 import { hideModals } from '../utils.module.js';
-import { createCard, update, destroy, associateTagWithCard } from './api.cards.module.js';
+import { createCard, update, destroy, associateTagWithCard, removeTagFromCard } from './api.cards.module.js';
 import { config } from '../config.module.js';
 
 function showAddCardModal(event) {
@@ -45,6 +45,8 @@ function makeCardInDOM(data) {
             tagElement.classList.add('tag');
             tagElement.textContent = tag.name;
             tagElement.style.backgroundColor = tag.color;
+            tagElement.setAttribute('data-tag-id', tag.id);
+            tagElement.addEventListener('dblclick', () => handleTagRemoval(data.id, tag.id));
             tagsContainer.appendChild(tagElement);
         });
     } else {
@@ -98,7 +100,7 @@ async function updateCard(event) {
                 content: data['content'], 
                 listId: data['list-id'] 
             };
-            const newCard = await createCard(newData);
+            const newCard = await update(newData);
             makeCardInDOM(newCard); 
         }
 
@@ -133,5 +135,17 @@ async function deleteCard(event) {
 
     card.remove();
 }
+
+function handleTagRemoval(cardId, tagId) {
+    removeTagFromCard(cardId, tagId).then(sucess => {
+        if (sucess) {
+            document.querySelector(`[data-tag-id="${tagId}"]`).remove();
+            console.log('Tag removed form DOM successfully');
+        } else {
+            console.log('Failed to remove tag from DOM');
+        }
+    });
+}
+
 
 export { showAddCardModal, makeCardInDOM, handleAddCardForm };

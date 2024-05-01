@@ -121,6 +121,32 @@ async function associateTagWithCard(cardId, tagId) {
 }
 
 
+async function removeTagFromCard(cardId, tagId) {
+    try {
+        const response = await fetch(`${config.base_url}/cards/${cardId}/tags/${tagId}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-csrf-token': document.head.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove tag');
+        }
+
+        console.log('Tag removed successfully');
+        return true; 
+    } catch (error) {
+        console.error('Error removing tag:', error);
+        return false; 
+    }
+}
 
 
-export { createCard, update, destroy, updateCardOrder, associateTagWithCard };
+
+
+
+
+export { createCard, update, destroy, updateCardOrder, associateTagWithCard, removeTagFromCard };
