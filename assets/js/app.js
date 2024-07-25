@@ -1,85 +1,33 @@
+// * Quand on importe avec ESM : on doit préciser l'extension du fichier
+import { addListenerToActions } from './utils.module.js';
+import { createListInDOM } from './list.module.js';
+
+
 const app = {
-  init: function() {
-      console.log('app.init !');
-      this.bindEvents();
-  },
+    base_url: "http://localhost:3000",
 
-  bindEvents: function() {
-      const container = document.querySelector('.container');
-      container.addEventListener('click', this.handleContainerClick.bind(this));
+    async getListsFromAPI() {
+        try {
+            const response = await fetch(`${this.base_url}/lists`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const lists = await response.json();
+            if (Array.isArray(lists)) {
+                lists.forEach(list => createListInDOM(list));
+            } else {
+                console.error("Erreur: La réponse de l'API n'est pas un tableau", lists);
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des listes: ", error);
+        }
+    },
 
-      const addListForm = document.querySelector('#addListModal form');
-      addListForm.addEventListener('submit', this.handleAddListForm.bind(this));
-
-      const addCardForm = document.querySelector('#addCardModal form');
-      addCardForm.addEventListener('submit', this.handleAddCardForm.bind(this));
-  },
-
-  handleContainerClick: function(event) {
-      if (event.target.closest('#addListButton')) {
-          this.showAddListModal();
-      } else if (event.target.closest('.fa-plus')) {
-          this.showAddCardModal(event);
-      } else if (event.target.closest('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button')) {
-          this.hideModals();
-      }
-  },
-
-  showAddListModal: function() {
-      const modal = document.getElementById('addListModal');
-      modal.classList.add('is-active');
-  },
-
-  showAddCardModal: function(event) {
-      const modal = document.getElementById('addCardModal');
-      const listElement = event.target.closest('.panel');
-      const listId = listElement.dataset.listId;
-      modal.querySelector('[name="list_id"]').value = listId;
-      modal.classList.add('is-active');
-  },
-
-  hideModals: function() {
-      const modals = document.querySelectorAll('.modal');
-      modals.forEach(modal => modal.classList.remove('is-active'));
-  },
-
-  handleAddListForm: function(event) {
-      event.preventDefault();
-      const formData = new FormData(event.target);
-      const listName = formData.get('name');
-      this.makeListInDOM(listName);
-      this.hideModals();
-  },
-
-  handleAddCardForm: function(event) {
-      event.preventDefault();
-      const formData = new FormData(event.target);
-      const cardName = formData.get('card_name');
-      const listId = formData.get('list_id');
-      this.makeCardInDOM(cardName, listId);
-      this.hideModals();
-  },
-
-  makeListInDOM: function(listName) {
-      const template = document.querySelector('#listTemplate');
-      const clone = template.content.cloneNode(true);
-      clone.querySelector('.panel-heading h2').textContent = listName;
-      const newId = Date.now().toString(); // Create a unique ID for the new list
-      clone.querySelector('.panel').dataset.listId = newId;
-      document.querySelector('.card-lists').appendChild(clone);
-  },
-
-  makeCardInDOM: function(cardName, listId) {
-      const list = document.querySelector(`[data-list-id="${listId}"] .panel-block`);
-      const template = document.querySelector('#cardTemplate');
-      const clone = template.content.cloneNode(true);
-      clone.querySelector('.box').dataset.cardId = Date.now().toString(); // Unique ID for the card
-      clone.querySelector('.column').textContent = cardName;
-      list.appendChild(clone);
-  }
+    init() {
+        this.getListsFromAPI();
+        addListenerToActions(); 
+    }
 };
 
-
-
-
-document.addEventListener('DOMContentLoaded', app.init.bind(app));
+// Attacher l'initialisation au chargement du DOM
+document.addEventListener('DOMContentLoaded', () => app.init());

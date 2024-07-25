@@ -1,16 +1,20 @@
 {
-  "name": "s07e01-atelier-okanban-front-sebdev43",
-  "version": "1.0.0",
-  "description": "okanban-front",
-  "main": ".eslintrc.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@eslint/js": "^9.1.1",
-    "eslint": "^9.1.1",
-    "globals": "^15.0.0"
-  }
+    "name": "s07e01-atelier-okanban-front-kenshirosan",
+    "version": "1.0.0",
+    "description": "---",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@eslint/js": "^9.1.1",
+        "eslint": "^9.1.1",
+        "globals": "^15.0.0",
+        "vite": "^5.2.10"
+    }
 }
