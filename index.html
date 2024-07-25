@@ -131,20 +131,20 @@
 
         <!-- LIST TEMPLATE -->
         <template id="list-template">
-            <div class="column is-one-quarter panel" data-list-id="A">
+            <div class="column is-one-quarter panel" data-list-id="A" >
                 <div class="panel-heading has-background-info">
                     <div class="columns">
                         <div class="column">
                             <h2 class="has-text-white" slot="title"></h2>
-                            
-                            <form method="POST" class="is-hidden" data-list-id="A">
+
+                            <form method="POST" class="is-hidden js-list-form">
                                 <input type="hidden" name="list-id" value="1" />
                                 <div class="field has-addons">
                                     <div class="control">
                                         <input
                                             type="text"
                                             class="input is-small"
-                                            name="list-name"
+                                            name="title"
                                             value=""
                                             placeholder="Nom de la liste"
                                         />
@@ -185,9 +185,34 @@
 
         <!-- CARD TEMPLATE -->
         <template id="card-template">
-            <div class="box" data-card-id="M">
+            <div class="box" data-card-id="M" >
                 <div class="columns">
                     <div class="column" slot="card-title">Brancher l'API</div>
+                    <div class="tags-container"></div>
+                    <form method="POST" class="is-hidden js-card-form">
+                        <input type="hidden" name="card-id" value="1" />
+                        <div class="field has-addons">
+                            <div class="control">
+                                <input
+                                    type="text"
+                                    class="input is-small"
+                                    name="content"
+                                    value=""
+                                    placeholder="Nom de la liste"
+                                />
+                            </div>
+                            <select name="selected-tag">
+                            <option value="1">Tag 1</option>
+                            <option value="2">Tag 2</option>
+                            <option value="3">Tag 3</option>
+                            </select>
+                            <div class="control">
+                                <button class="button is-small is-success">
+                                    Valider
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="column is-narrow">
                         <a href="#">
                             <span class="icon is-small has-text-primary">
@@ -200,6 +225,7 @@
                             </span>
                         </a>
                     </div>
+                    
                 </div>
                 <!-- Ajout du formulaire d'édition -->
                 <form class="edit-card-form is-hidden">

@@ -1,22 +1,22 @@
 // * Quand on importe avec ESM : on doit préciser l'extension du fichier
 import { addListenerToActions } from './utils.module.js';
-import { getLists, setupListEditing, setupListDeletion } from './list.module.js';
+import { getLists } from './lists/list.module.js';
 import { getToken } from './api.module.js';
-import { setupCardEditing, setupCardDeletion } from './card.module.js';
+import { setupCardDragAndDrop, setupDragAndDrop } from './Sortablejs.module.js';
 
 
-function init() {
-    console.log('Init function started');
-    getToken();
-    getLists();
+
+async function init() {
+    console.log('ini');
+    await getToken();
+    await getLists();
+    
     addListenerToActions();
-    setupListEditing();
-    setupCardEditing();
-    setupCardDeletion();
-    setupCardDeletion();
-    console.log('Init function completed');
+    setupDragAndDrop();
+    setupCardDragAndDrop();
+    console.log('finished');
 }
 
 
-// Attacher l'initialisation au chargement du DOM
-document.addEventListener('DOMContentLoaded', () => app.init());
+// on accroche un écouteur d'évènement sur le document : quand le chargement est terminé, on lance app.init
+document.addEventListener('DOMContentLoaded', init);

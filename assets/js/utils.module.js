@@ -1,6 +1,12 @@
-import { handleAddListForm, showAddListModal } from './list.module.js';
-import { showAddCardModal, handleAddCardForm } from './card.module.js';
+import {
+    handleAddListForm,
+    showAddListModal,
+    showEditListForm,
+    editList,
+    
+} from './lists/list.module.js';
 
+import { showAddCardModal, handleAddCardForm } from './cards/card.module.js';
 
 // * peut-être bouger cette function ailleurs
 function addListenerToActions() {
@@ -15,25 +21,32 @@ function addListenerToActions() {
 
     // AJOUT DE CARTES
     addEventsToList();
-
-    // Attacher handleAddListForm correctement si nécessaire
-    const addListForm = document.querySelector('#addListModal form');
-    if (addListForm) {
-        addListForm.addEventListener('submit', handleAddListForm);
-    }
-    
-    // Attacher handleAddCardForm correctement
-    const addCardForm = document.querySelector('#addCardModal form');
-    if (addCardForm) {
-        addCardForm.addEventListener('submit', handleAddCardForm);
-    }
+    handleAddListForm();
+    handleAddCardForm();
 }
 
+// * On pourrait mettre le contenu de cette fonction dans le makeListInDom
+// * Continuer la réflexion : est-ce que cette fonction ne devrait pas être refactoriser
 function addEventsToList() {
     const addCardBtns = document.querySelectorAll('.panel a.is-pulled-right');
     addCardBtns.forEach((btn) => {
         btn.addEventListener('click', showAddCardModal);
-    });
+    }
+
+    const titles = document.querySelectorAll('.panel h2');
+    for (const listTitle of titles) {
+        // * Avec cette syntaxe, l'event est fourni directement par JS, on passe par référence, on ne met pas les parenthèses
+        // * Warning : je suis pas sur du terme référence
+        listTitle.addEventListener('dblclick', showEditListForm);
+
+        // listTitle.addEventListener('dblclick', (event) => {
+        //     showEditListForm(event);
+        // });
+    }
+    const editListForms = document.querySelectorAll('.panel form.js-list-form');
+    for (const form of editListForms) {
+        form.addEventListener('submit', editList);
+    }
 }
 
 
