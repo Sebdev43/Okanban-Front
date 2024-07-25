@@ -1,4 +1,57 @@
-# oKanban-front, jour 2
+# oKanban-front, jour 3
+
+> **Le port 5000 (API) n'est pas disponible sur les macs**
+
+On continue le CRUD côté front...
+
+## Éditer une liste
+
+Tu as du remarquer que dans chaque liste, à côté du `<h2>`, se cache un petit formulaire. Il est prévu pour éditer le nom des listes !
+
+Voici ce qu'il faut mettre en place :
+
+- Lorsqu'on double click sur un titre, on masque le `<h2>`, et on affiche le formulaire.
+- Lorsqu'on valide le formulaire (en tapant sur "Entrée"), on appelle l'API.
+- Si l'api renvoie une erreur, on ré-affiche le titre sans le modifier.
+- Si l'api renvoie un succès, on modifie le `<h2>`, et on le réaffiche.
+- Dans tous les cas, on masque le formulaire !
+
+<details>
+<summary>De l'aide</summary>
+
+- L'évènement pour un double click est "dblclick".
+- Pour afficher/masquer quelque chose, Bulma nous fournit la classe CSS "is-hidden".
+- Pour tout le reste, inspire toi de ce qui a été fait les jours précédents : récuperer un élément, lui ajouter un écouter, éviter le fonctionnement par défaut des events, ...
+- Et surtout, n'oublie pas de brancher toutes ces nouvelles intercations sur les éléments (listes et cartes) au moment de leur création !
+
+</details>
+
+## Éditer une carte
+
+Mets en place le même fonctionnement pour éditer les titres des cartes.
+
+Attention :
+
+- On ne clique pas sur le nom, mais sur l'icone "stylo" juste à côté.
+- Le formulaire n'existe pas... rajoute le dans le template !
+
+## Supprimer une carte
+
+Un clic sur l'icone de poubelle doit supprimer la carte.
+
+## Supprimer une liste
+
+Rajoute l'icône permettant de supprimer une liste et donne lui le comportement adéquat.
+
+Il serait intéressant de demander la confirmation à l'utilisateur avant la suppression. 😉
+
+## Gérer la couleur d'une carte
+
+Ajoute la possibilité de changer la couleur d'une carte, que ce soit lors de sa création ou de sa modification.
+
+---
+
+## oKanban-front, jour 2
 
 ## Dynamic data
 
@@ -10,9 +63,9 @@ Maintenant qu'on a nos méthodes prêtes à l'emploi, tu peux enlever toutes les
 
 #### Récupérer les vraies listes
 
-Commence par ajouter une propriété `base_url` dans app. Sa valeur est l'url "de base" de ton API oKanban !
+Commence par ajouter une propriété `base_url`. Sa valeur est l'url "de base" de ton API oKanban !
 
-Crée ensuite une méthode `getListsFromAPI` dans app. Pour faciliter la suite, cette fonction est `async`.
+Crée ensuite une méthode `getListsFromAPI`. Pour faciliter la suite, cette fonction est `async`.
 
 Dans cette méthode, utilise [fetch](https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch) pour appeller la route "GET /lists" de l'api.
 

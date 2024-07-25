@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta name="csrf-token" />
+
         <title>oKanban</title>
 
         <link rel="shortcut icon" href="data:image" type="image/x-icon" />
@@ -35,7 +38,9 @@
                 <div class="columns">
                     <div class="column is-full">
                         <div class="card-lists columns">
-                            
+                            <!-- BEGIN LISTS -->
+
+                            <!-- END LISTS -->
                         </div>
                     </div>
                 </div>
@@ -131,8 +136,8 @@
                     <div class="columns">
                         <div class="column">
                             <h2 class="has-text-white" slot="title"></h2>
-
-                            <form method="POST" class="is-hidden">
+                            
+                            <form method="POST" class="is-hidden" data-list-id="A">
                                 <input type="hidden" name="list-id" value="1" />
                                 <div class="field has-addons">
                                     <div class="control">
@@ -159,6 +164,11 @@
                             <a href="#" class="is-pulled-right">
                                 <span class="icon is-small has-text-white">
                                     <i class="fas fa-plus"></i>
+                                </span>
+                            </a>
+                            <a href="#">
+                                <span class="icon is-small has-text-danger">
+                                    <i class="fas fa-trash-alt delete-list"></i>
                                 </span>
                             </a>
                         </div>
@@ -191,8 +201,14 @@
                         </a>
                     </div>
                 </div>
+                <!-- Ajout du formulaire d'édition -->
+                <form class="edit-card-form is-hidden">
+                    <input type="text" class="input is-small" name="card-name" placeholder="Nouveau titre">
+                    <button type="submit" class="button is-small is-success">Valider</button>
+                </form>
             </div>
         </template>
+        
         <!-- FIN CARD TEMPLATE -->
 
         <!-- Chargement de mon fichier JS -->
