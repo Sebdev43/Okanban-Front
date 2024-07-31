@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="oKanban - Votre tableau Kanban personnel">
+    <meta name="keywords" content="Kanban, gestion de projet, tableau, tâches">
+    <meta name="author" content="oKanban Team">
+    <title>oKanban</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Bienvenue sur oKanban</h1>
+            <p class="subtitle has-text-centered mb-6">
+                Utilisez oKanban pour organiser vos tâches et projets. Cliquez sur "Ajouter une liste" pour créer une nouvelle liste de tâches. Ajoutez des cartes dans vos listes pour détailler chaque tâche. Utilisez les tags pour mieux organiser et filtrer vos tâches.
+            </p>
+            <div id="kanban-container">
+                <div class="columns is-centered mb-4">
+                    <div class="column is-narrow">
+                        <button class="button is-success" id="addListButton">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Ajouter une liste</span>
+                        </button>
+                    </div>
+                    <div class="column is-narrow">
+                        <button class="button is-warning" id="addTagButton">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span>Ajouter un tag</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="tags are-medium has-addons is-centered mb-4" id="tag-container">
+                    <span class="tag is-info">Tags disponibles :</span>
+                    <!-- Les tags seront ajoutés ici -->
+                </div>
+                <div class="columns is-multiline" id="lists-container">
+                    <!-- Les listes seront ajoutées ici -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modals -->
+    <div class="modal" id="addListModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <form method="POST">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Ajouter une liste</p>
+                    <button class="delete close" type="button" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <label class="label">Nom</label>
+                        <div class="control">
+                            <input type="text" class="input" name="title" placeholder="Nom de la liste" required>
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success">Save changes</button>
+                    <button class="button close" type="button">Cancel</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addCardModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <form method="POST">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Ajouter une carte</p>
+                    <button class="delete close" type="button" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <input type="hidden" name="list_id" value="">
+                        <label class="label">Nom</label>
+                        <div class="control">
+                            <input type="text" class="input" name="content" placeholder="Nom de la carte" required>
+                        </div>
+                        <label class="label">Tag</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="selectedTag">
+                                    <option value="">Aucun</option>
+                                    <!-- Les options seront ajoutées dynamiquement via JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success">Save changes</button>
+                    <button class="button close" type="button">Cancel</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addTagModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <form method="POST">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Ajouter un tag</p>
+                    <button class="delete close" type="button" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <label class="label">Nom du tag</label>
+                        <div class="control">
+                            <input type="text" class="input" name="name" placeholder="Nom du tag" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Couleur</label>
+                        <div class="control">
+                            <input type="color" class="input" name="color" value="" required>
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success">Save changes</button>
+                    <button class="button close" type="button">Cancel</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editTagModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <form id="editTagForm" method="POST">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Modifier un tag</p>
+                    <button class="delete close" type="button" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <label class="label">Nom du tag</label>
+                        <div class="control">
+                            <input type="text" class="input" name="name" placeholder="Nom du tag" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Couleur</label>
+                        <div class="control">
+                            <input type="color" class="input" name="color" value="" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="id" value="">
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success">Save changes</button>
+                    <button class="button close" type="button">Cancel</button>
+                    <button class="button is-danger" id="deleteTagButton" type="button">Delete Tag</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="editCardModal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <form method="POST">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Modifier une carte</p>
+                    <button class="delete close" type="button" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="field">
+                        <input type="hidden" name="card-id" value="">
+                        <label class="label">Nom</label>
+                        <div class="control">
+                            <input type="text" class="input" name="content" placeholder="Nom de la carte" required>
+                        </div>
+                        <label class="label">Tag</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="selectedTag">
+                                    <option value="">Aucun</option>
+                                    <!-- Les options seront ajoutées dynamiquement via JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <footer class="modal-card-foot">
+                    <button class="button is-success">Save changes</button>
+                    <button class="button close" type="button">Cancel</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <template id="tag-template">
+        <div class="tag">text</div>
+    </template>
+
+    <script type="module" src="/assets/js/kanban.js"></script>
+</body>
+</html>

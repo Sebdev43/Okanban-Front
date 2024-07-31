@@ -1,244 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-        <meta name="csrf-token" />
-
-        <title>oKanban</title>
-
-        <link rel="shortcut icon" href="data:image" type="image/x-icon" />
-
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"
-        />
-        <link rel="stylesheet" href="./assets/css/style.css" />
-        <script
-            defer
-            src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
-        ></script>
-    </head>
-
-    <body>
-        <section class="section">
-            <div class="container">
-                <h1 class="title">oKanban</h1>
-
-                <div class="column">
-                    <button class="button is-success" id="addListButton">
-                        <span class="icon is-small">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        &nbsp; Ajouter une liste
-                    </button>
-                </div>
-
-                <div class="columns">
-                    <div class="column is-full">
-                        <div class="card-lists columns">
-                            <!-- BEGIN LISTS -->
-
-                            <!-- END LISTS -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!--  ADD LIST MODAL -->
-
-        <div class="modal" id="addListModal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <form method="POST">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Ajouter une liste</p>
-                        <button
-                            class="delete close"
-                            type="button"
-                            aria-label="close"
-                        ></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <div class="field">
-                            <label class="label">Nom</label>
-                            <div class="control">
-                                <!-- "name=titme pour correspondre à notre API" -->
-                                <input
-                                    type="text"
-                                    class="input"
-                                    name="title"
-                                    value=""
-                                    placeholder="Nom de la liste"
-                                />
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button class="button is-success">Save changes</button>
-                        <button class="button close" type="button">
-                            Cancel
-                        </button>
-                    </footer>
-                </form>
-            </div>
-        </div>
-        <!-- END LIST MODAL -->
-
-        <!-- CARD MODAL -->
-        <div class="modal" id="addCardModal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <form method="POST">
-                    <header class="modal-card-head">
-                        <p class="modal-card-title">Ajouter une carte</p>
-                        <button
-                            class="delete close"
-                            type="button"
-                            aria-label="close"
-                        ></button>
-                    </header>
-                    <section class="modal-card-body">
-                        <div class="field">
-                            <!-- input pour l'ID de la liste à laquelle appartient la carte-->
-                            <input type="hidden" name="list_id" value="" />
-
-                            <label class="label">Nom</label>
-                            <div class="control">
-                                <!-- "name=content pour correspondre à notre API" -->
-                                <input
-                                    type="text"
-                                    class="input"
-                                    name="content"
-                                    value=""
-                                    placeholder="Nom de la liste"
-                                />
-                            </div>
-                        </div>
-                    </section>
-                    <footer class="modal-card-foot">
-                        <button class="button is-success">Save changes</button>
-                        <button class="button close" type="button">
-                            Cancel
-                        </button>
-                    </footer>
-                </form>
-            </div>
-        </div>
-        <!-- END CARD MODAL -->
-
-        <!-- LIST TEMPLATE -->
-        <template id="list-template">
-            <div class="column is-one-quarter panel" data-list-id="A" >
-                <div class="panel-heading has-background-info">
-                    <div class="columns">
-                        <div class="column">
-                            <h2 class="has-text-white" slot="title"></h2>
-
-                            <form method="POST" class="is-hidden js-list-form">
-                                <input type="hidden" name="list-id" value="1" />
-                                <div class="field has-addons">
-                                    <div class="control">
-                                        <input
-                                            type="text"
-                                            class="input is-small"
-                                            name="title"
-                                            value=""
-                                            placeholder="Nom de la liste"
-                                        />
-                                    </div>
-                                    <div class="control">
-                                        <button
-                                            class="button is-small is-success"
-                                        >
-                                            Valider
-                                        </button>
-                                    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="oKanban - Connectez-vous ou inscrivez-vous pour accéder à votre tableau Kanban personnel.">
+    <meta name="keywords" content="Kanban, gestion de projet, connexion, inscription">
+    <meta name="author" content="oKanban Team">
+    <title>Login/Register - oKanban</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Bienvenue sur oKanban</h1>
+            <p class="subtitle has-text-centered mb-6">Connectez-vous ou inscrivez-vous pour accéder à votre tableau Kanban personnel.</p>
+            <div class="columns is-centered">
+                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+                    <div id="login-form" class="box">
+                        <h2 class="title is-4">Login</h2>
+                        <form id="login">
+                            <div class="field">
+                                <label class="label" for="login-email">Email</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="email" id="login-email" name="email" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
                                 </div>
-                            </form>
-                        </div>
-
-                        <div class="column is-narrow">
-                            <a href="#" class="is-pulled-right">
-                                <span class="icon is-small has-text-white">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                            </a>
-                            <a href="#">
-                                <span class="icon is-small has-text-danger">
-                                    <i class="fas fa-trash-alt delete-list"></i>
-                                </span>
-                            </a>
-                        </div>
+                            </div>
+                            <div class="field">
+                                <label class="label" for="login-password">Password</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="password" id="login-password" name="password" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-fullwidth" type="submit">Login</button>
+                            </div>
+                        </form>
+                        <p class="mt-4 has-text-centered">
+                            Don't have an account? <a href="#" id="show-register">Register</a>
+                        </p>
+                    </div>
+                    <div id="register-form" class="box is-hidden">
+                        <h2 class="title is-4">Register</h2>
+                        <form id="register">
+                            <div class="field">
+                                <label class="label" for="register-email">Email</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="email" id="register-email" name="email" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label" for="register-password">Password</label>
+                                <div class="control has-icons-left">
+                                    <input class="input" type="password" id="register-password" name="password" required>
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <button class="button is-link is-fullwidth" type="submit">Register</button>
+                            </div>
+                        </form>
+                        <p class="mt-4 has-text-centered">
+                            Already have an account? <a href="#" id="show-login">Login</a>
+                        </p>
                     </div>
                 </div>
-                <div class="panel-block is-block has-background-light">
-                    <!-- card -->
-                    <!-- <div class="box" data-card-id="I"></div> -->
-                    <!--/ card -->
-                </div>
             </div>
-        </template>
-        <!-- FIN LIST TEMPLATE -->
-
-        <!-- CARD TEMPLATE -->
-        <template id="card-template">
-            <div class="box" data-card-id="M" >
-                <div class="columns">
-                    <div class="column" slot="card-title">Brancher l'API</div>
-                    <div class="tags-container"></div>
-                    <form method="POST" class="is-hidden js-card-form">
-                        <input type="hidden" name="card-id" value="1" />
-                        <div class="field has-addons">
-                            <div class="control">
-                                <input
-                                    type="text"
-                                    class="input is-small"
-                                    name="content"
-                                    value=""
-                                    placeholder="Nom de la liste"
-                                />
-                            </div>
-                            <select name="selected-tag">
-                            <option value="1">Tag 1</option>
-                            <option value="2">Tag 2</option>
-                            <option value="3">Tag 3</option>
-                            </select>
-                            <div class="control">
-                                <button class="button is-small is-success">
-                                    Valider
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="column is-narrow">
-                        <a href="#">
-                            <span class="icon is-small has-text-primary">
-                                <i class="fas fa-pencil-alt"></i>
-                            </span>
-                        </a>
-                        <a href="#">
-                            <span class="icon is-small has-text-danger">
-                                <i class="fas fa-trash-alt"></i>
-                            </span>
-                        </a>
-                    </div>
-                    
-                </div>
-                <!-- Ajout du formulaire d'édition -->
-                <form class="edit-card-form is-hidden">
-                    <input type="text" class="input is-small" name="card-name" placeholder="Nouveau titre">
-                    <button type="submit" class="button is-small is-success">Valider</button>
-                </form>
-            </div>
-        </template>
-        
-        <!-- FIN CARD TEMPLATE -->
-
-        <!-- Chargement de mon fichier JS -->
-
-        <script type="module" src="./assets/js/app.js"></script>
-    </body>
+        </div>
+    </section>
+    <script type="module" src="/assets/js/auth.js"></script>
+</body>
 </html>

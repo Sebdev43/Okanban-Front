@@ -6,3 +6,39 @@ body {
 .card-lists {
   overflow-x: auto;
 }
+
+#tag-container .tag {
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+/* Espacement entre les cartes */
+.card {
+  margin-bottom: 1.5rem;
+}
+
+/* Alignement des boutons et espacement */
+.buttons {
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Espacement autour des modals */
+.modal-card {
+  margin: 0 1rem;
+}
+
+/* Responsive design pour les listes */
+@media (max-width: 768px) {
+  .columns.is-multiline {
+      flex-direction: column;
+  }
+  .column.is-narrow {
+      margin-bottom: 1rem;
+  }
+}
+
+/* Centrage du contenu principal */
+#kanban-container {
+  text-align: center;
+}
