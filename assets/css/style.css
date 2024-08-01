@@ -3,42 +3,37 @@ body {
   height: 100vh;
 }
 
-.card-lists {
-  overflow-x: auto;
+
+
+.tag {
+  margin-right: 0.2rem !important;
+  margin-left: 0.2rem !important;
+  border-radius: 4px !important;
 }
 
-#tag-container .tag {
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
 
-/* Espacement entre les cartes */
 .card {
   margin-bottom: 1.5rem;
 }
 
-/* Alignement des boutons et espacement */
+
 .buttons {
   justify-content: center;
   margin-bottom: 1.5rem;
 }
 
-/* Espacement autour des modals */
+
 .modal-card {
   margin: 0 1rem;
 }
-
-/* Responsive design pour les listes */
-@media (max-width: 768px) {
-  .columns.is-multiline {
-      flex-direction: column;
-  }
-  .column.is-narrow {
-      margin-bottom: 1rem;
-  }
+.icon is-small {
+  margin: 0.2rem;
 }
-
-/* Centrage du contenu principal */
-#kanban-container {
-  text-align: center;
+.panel {
+  box-shadow: none;
+}
+@media screen and (min-width: 769px), print {
+  .column.is-one-quarter, .column.is-one-quarter-tablet {
+    width: auto ;
+  }
 }

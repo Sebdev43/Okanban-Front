@@ -1,55 +1,50 @@
-import { showEditTagModal } from '../handlers/tagHandlers.js';
+import { showEditTagModal } from "../handlers/tagHandlers.js";
 function displayTags(tags) {
-    const tagContainer = document.getElementById('tag-container');
-    tagContainer.innerHTML = ''; // Clear existing tags
+  const tagContainer = document.getElementById("tag-container");
+  tagContainer.innerHTML = "";
 
-    tags.forEach(tag => {
-        const tagElement = document.createElement('div');
-        tagElement.classList.add('tag');
-        tagElement.textContent = tag.name;
-        tagElement.style.backgroundColor = tag.color;
-        tagElement.setAttribute('data-tag-id', tag.id); // Ajouter l'ID du tag
+  tags.forEach((tag) => {
+    const tagElement = document.createElement("div");
+    tagElement.classList.add("tag");
+    tagElement.textContent = tag.name;
+    tagElement.style.backgroundColor = tag.color;
+    tagElement.setAttribute("data-tag-id", tag.id);
 
-        // Ajouter l'écouteur d'événement pour le double-clic
-        tagElement.addEventListener('dblclick', (event) => {
-            const tagId = event.currentTarget.getAttribute('data-tag-id');
-            const tagName = event.currentTarget.textContent;
-            const tagColor = event.currentTarget.style.backgroundColor;
-            showEditTagModal(tagId, tagName, tagColor);
-        });
-
-        tagContainer.appendChild(tagElement);
+    tagElement.addEventListener("dblclick", (event) => {
+      const tagId = event.currentTarget.getAttribute("data-tag-id");
+      const tagName = event.currentTarget.textContent;
+      const tagColor = event.currentTarget.style.backgroundColor;
+      showEditTagModal(tagId, tagName, tagColor);
     });
+
+    tagContainer.appendChild(tagElement);
+  });
 }
 
-
 function displayCards(cards, tags) {
-    console.log('Cards:', cards); // Vérifier les cartes récupérées
-    console.log('Tags:', tags); // Vérifier les tags récupérés
-
-    const listsContainer = document.getElementById('lists-container');
-    listsContainer.querySelectorAll('.panel .panel-block').forEach(panelBlock => {
-        panelBlock.innerHTML = ''; // Clear existing cards
+  const listsContainer = document.getElementById("lists-container");
+  listsContainer
+    .querySelectorAll(".panel .panel-block")
+    .forEach((panelBlock) => {
+      panelBlock.innerHTML = "";
     });
 
-    cards.forEach(card => {
-        const listElement = listsContainer.querySelector(`.panel[data-list-id="${card.list_id}"] .panel-block`);
-        const cardElement = document.createElement('div');
-        cardElement.classList.add('box');
-        cardElement.setAttribute('data-card-id', card.id);
+  cards.forEach((card) => {
+    const listElement = listsContainer.querySelector(
+      `.panel[data-list-id="${card.list_id}"] .panel-block`
+    );
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("box");
+    cardElement.setAttribute("data-card-id", card.id);
 
-        console.log('Processing card:', card);
+    let cardTagColor = "";
+    if (card.tags && card.tags.length > 0) {
+      cardTagColor = card.tags[0].color;
+    }
 
-        let cardTagColor = '';
-        if (card.tags && card.tags.length > 0) {
-            cardTagColor = card.tags[0].color; // Prendre la couleur du premier tag
-        }
+    cardElement.style.backgroundColor = cardTagColor;
 
-        console.log(`Card ID: ${card.id}, Tag Color: ${cardTagColor}`);
-
-        cardElement.style.backgroundColor = cardTagColor;
-
-        cardElement.innerHTML = `
+    cardElement.innerHTML = `
             <div class="columns">
                 <div class="column">${card.content}</div>
                 <div class="column is-narrow">
@@ -68,19 +63,19 @@ function displayCards(cards, tags) {
             </div>
         `;
 
-        listElement.appendChild(cardElement);
-    });
+    listElement.appendChild(cardElement);
+  });
 }
 function displayLists(lists) {
-    const listsContainer = document.getElementById('lists-container');
-    listsContainer.innerHTML = ''; // Clear existing lists
+  const listsContainer = document.getElementById("lists-container");
+  listsContainer.innerHTML = "";
 
-    lists.forEach(list => {
-        const listElement = document.createElement('div');
-        listElement.classList.add('column', 'is-one-quarter', 'panel');
-        listElement.setAttribute('data-list-id', list.id);
+  lists.forEach((list) => {
+    const listElement = document.createElement("div");
+    listElement.classList.add("column", "is-one-quarter", "panel");
+    listElement.setAttribute("data-list-id", list.id);
 
-        listElement.innerHTML = `
+    listElement.innerHTML = `
             <div class="panel-heading has-background-info">
                 <div class="columns">
                     <div class="column js-sort-list">
@@ -121,8 +116,8 @@ function displayLists(lists) {
             </div>
         `;
 
-        listsContainer.appendChild(listElement);
-    });
+    listsContainer.appendChild(listElement);
+  });
 }
 
 export { displayTags, displayCards, displayLists };

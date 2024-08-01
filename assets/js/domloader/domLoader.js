@@ -1,27 +1,25 @@
-import { getListsFromAPI } from '../lists/api.lists.module.js';
-import { getCardsFromList } from '../cards/api.cards.module.js';
-import { getTagsFromAPI } from '../tags/api.tags.module.js';
-import { displayLists, displayCards, displayTags } from './renderers.js';
+import { getListsFromAPI } from "../lists/api.lists.module.js";
+import { getCardsFromList } from "../cards/api.cards.module.js";
+import { getTagsFromAPI } from "../tags/api.tags.module.js";
+import { displayLists, displayCards, displayTags } from "./renderers.js";
 
 async function loadInitialData() {
-    try {
-        const lists = await getListsFromAPI();
-        console.log('Loaded lists:', lists);
-        displayLists(lists);
+  try {
+    const lists = await getListsFromAPI();
 
-        const cardsPromises = lists.map(list => getCardsFromList(list.id));
-        const cardsArray = await Promise.all(cardsPromises);
-        const cards = cardsArray.flat();
-        console.log('Loaded cards:', cards);
+    displayLists(lists);
 
-        const tags = await getTagsFromAPI();
-        console.log('Loaded tags:', tags);
+    const cardsPromises = lists.map((list) => getCardsFromList(list.id));
+    const cardsArray = await Promise.all(cardsPromises);
+    const cards = cardsArray.flat();
 
-        displayCards(cards, tags);
-        displayTags(tags);
-    } catch (error) {
-        console.error('Error loading initial data:', error);
-    }
+    const tags = await getTagsFromAPI();
+
+    displayCards(cards, tags);
+    displayTags(tags);
+  } catch (error) {
+    console.error("Error loading initial data:", error);
+  }
 }
 
 export { loadInitialData };

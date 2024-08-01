@@ -8,18 +8,18 @@
     <meta name="author" content="oKanban Team">
     <title>oKanban</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
 <body>
     <section class="section">
         <div class="container">
-            <h1 class="title has-text-centered">Bienvenue sur oKanban</h1>
+            <h1 class="title has-text-centered">Bienvenue sur OKanban</h1>
             <p class="subtitle has-text-centered mb-6">
                 Utilisez oKanban pour organiser vos tâches et projets. Cliquez sur "Ajouter une liste" pour créer une nouvelle liste de tâches. Ajoutez des cartes dans vos listes pour détailler chaque tâche. Utilisez les tags pour mieux organiser et filtrer vos tâches.
             </p>
             <div id="kanban-container">
-                <div class="columns is-centered mb-4">
+                <div class="columns mb-4">
                     <div class="column is-narrow">
                         <button class="button is-success" id="addListButton">
                             <span class="icon is-small">
@@ -37,9 +37,11 @@
                         </button>
                     </div>
                 </div>
-                <div class="tags are-medium has-addons is-centered mb-4" id="tag-container">
-                    <span class="tag is-info">Tags disponibles :</span>
-                    <!-- Les tags seront ajoutés ici -->
+                <div class="tags has-addons is-centered mb-4">
+                    <p class="control">
+                        <span class="tag is-info">Tags disponibles :</span>
+                    </p>
+                    <div id="tag-container"></div>
                 </div>
                 <div class="columns is-multiline" id="lists-container">
                     <!-- Les listes seront ajoutées ici -->
