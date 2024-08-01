@@ -12,11 +12,11 @@ oKanban est une application web pour la gestion de projets utilisant la méthode
 
 ## Technologies utilisées
 
-- HTML5
-- CSS3
-- JavaScript
-- Bulma
-- FontAwesome
+- ![HTML5](https://img.shields.io/badge/-HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+- ![CSS3](https://img.shields.io/badge/-CSS3-1572B6?style=flat&logo=css3&logoColor=white)
+- ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+- ![Bulma](https://img.shields.io/badge/-Bulma-00D1B2?style=flat&logo=bulma&logoColor=white)
+- ![FontAwesome](https://img.shields.io/badge/-Font%20Awesome-339AF0?style=flat&logo=font-awesome&logoColor=white)
 
 ## Utilisation
 
