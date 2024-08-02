@@ -84,10 +84,10 @@ function displayLists(lists) {
                             <input type="hidden" name="list-id" value="${list.id}">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input type="text" class="input is-small" name="title" placeholder="Nom de la liste">
+                                    <input type="text" class="input is-small" name="title" placeholder="List name">
                                 </div>
                                 <div class="control">
-                                    <button class="button is-small is-success">Valider</button>
+                                    <button class="button is-small is-success">Save</button>
                                 </div>
                             </div>
                         </form>

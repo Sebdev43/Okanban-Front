@@ -1,83 +1,83 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="oKanban - Connectez-vous ou inscrivez-vous pour accéder à votre tableau Kanban personnel.">
-    <meta name="keywords" content="Kanban, gestion de projet, connexion, inscription">
-    <meta name="author" content="oKanban Team">
+    <meta name="description" content="oKanban - Login or register to access your personal Kanban board.">
+    <meta name="keywords" content="Kanban, project management, login, registration">
+    <meta name="author" content="Sebdev43">
     <title>Login/Register - oKanban</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <section class="section">
-        <div class="container">
-            <h1 class="title has-text-centered">Bienvenue sur oKanban</h1>
-            <p class="subtitle has-text-centered mb-6">Connectez-vous ou inscrivez-vous pour accéder à votre tableau Kanban personnel.</p>
-            <div class="columns is-centered">
-                <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                    <div id="login-form" class="box">
+        <section class="container">
+            <h1 class="title has-text-centered">Welcome to oKanban</h1>
+            <p class="subtitle has-text-centered mb-6">Login or register to access your personal Kanban board.</p>
+            <section class="columns is-centered">
+                <section class="column is-5-tablet is-4-desktop is-3-widescreen">
+                    <section id="login-form" class="box">
                         <h2 class="title is-4">Login</h2>
                         <form id="login">
-                            <div class="field">
+                            <section class="field">
                                 <label class="label" for="login-email">Email</label>
-                                <div class="control has-icons-left">
+                                <section class="control has-icons-left">
                                     <input class="input" type="email" id="login-email" name="email" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
-                                </div>
-                            </div>
-                            <div class="field">
+                                </section>
+                            </section>
+                            <section class="field">
                                 <label class="label" for="login-password">Password</label>
-                                <div class="control has-icons-left">
+                                <section class="control has-icons-left">
                                     <input class="input" type="password" id="login-password" name="password" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
-                                </div>
-                            </div>
-                            <div class="control">
+                                </section>
+                            </section>
+                            <section class="control">
                                 <button class="button is-link is-fullwidth" type="submit">Login</button>
-                            </div>
+                            </section>
                         </form>
                         <p class="mt-4 has-text-centered">
                             Don't have an account? <a href="#" id="show-register">Register</a>
                         </p>
-                    </div>
-                    <div id="register-form" class="box is-hidden">
+                    </section>
+                    <section id="register-form" class="box is-hidden">
                         <h2 class="title is-4">Register</h2>
                         <form id="register">
-                            <div class="field">
+                            <section class="field">
                                 <label class="label" for="register-email">Email</label>
-                                <div class="control has-icons-left">
+                                <section class="control has-icons-left">
                                     <input class="input" type="email" id="register-email" name="email" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
-                                </div>
-                            </div>
-                            <div class="field">
+                                </section>
+                            </section>
+                            <section class="field">
                                 <label class="label" for="register-password">Password</label>
-                                <div class="control has-icons-left">
+                                <section class="control has-icons-left">
                                     <input class="input" type="password" id="register-password" name="password" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
-                                </div>
-                            </div>
-                            <div class="control">
+                                </section>
+                            </section>
+                            <section class="control">
                                 <button class="button is-link is-fullwidth" type="submit">Register</button>
-                            </div>
+                            </section>
                         </form>
                         <p class="mt-4 has-text-centered">
                             Already have an account? <a href="#" id="show-login">Login</a>
                         </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </section>
+                </section>
+            </section>
+        </section>
     </section>
     <script type="module" src="/assets/js/auth.js"></script>
 </body>

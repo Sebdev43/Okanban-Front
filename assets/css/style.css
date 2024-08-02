@@ -1,4 +1,4 @@
-body {
+html {
   background-color: #ccc;
   height: 100vh;
 }
@@ -36,4 +36,7 @@ body {
   .column.is-one-quarter, .column.is-one-quarter-tablet {
     width: auto ;
   }
+}
+.add {
+  display: flex;
 }
