@@ -1,214 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="oKanban - Your personal kanban board">
-    <meta name="keywords" content="Kanban, project management, board, tasks">
-    <meta name="author" content="Sebdev43">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="oKanban - Your personal kanban board" />
+    <meta name="keywords" content="Kanban, project management, board, tasks" />
+    <meta name="author" content="Sebdev43" />
     <title>OKanban</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css"
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+  </head>
+  <body>
     <section class="section">
-        <section class="container">
-            <h1 class="title has-text-centered">OKanban</h1>
-            <p class="subtitle has-text-centered mb-6">
-                Use oKanban to organize your tasks and projects. Click on "Add a list" to create a new to-do list. Add cards to your lists to detail each task. Use tags to better organize and filter your tasks.
-            </p>
-            <section id="kanban-container">
-                <section class="columns mb-4 add">
-                    <section class="column is-narrow">
-                        <button class="button is-success" id="addListButton">
-                            <span class="icon is-small">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span>Add a list</span>
-                        </button>
-                    </section>
-                    <section class="column is-narrow ">
-                        <button class="button is-warning" id="addTagButton">
-                            <span class="icon is-small">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span>Add a tag</span>
-                        </button>
-                    </section>
-                </section>
-                <section class="tags has-addons is-centered mb-4">
-                    <p class="control">
-                        <span class="tag is-info">Tags available :</span>
-                    </p>
-                    <section id="tag-container"></section>
-                </section>
-                <section class="columns is-multiline" id="lists-container">
-                    <!-- Les listes seront ajoutées ici -->
-                </section>
+      <section class="container">
+        <h1 class="title has-text-centered">OKanban</h1>
+        <p class="subtitle has-text-centered mb-6">
+          Use oKanban to organize your tasks and projects. Click on "Add a list"
+          to create a new to-do list. Add cards to your lists to detail each
+          task. Use tags to better organize and filter your tasks.
+        </p>
+        <section id="kanban-container">
+          <section class="columns mb-4 add">
+            <section class="column is-narrow">
+              <button class="button is-success" id="addListButton">
+                <span class="icon is-small">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span>Add a list</span>
+              </button>
             </section>
+            <section class="column is-narrow">
+              <button class="button is-warning" id="addTagButton">
+                <span class="icon is-small">
+                  <i class="fas fa-plus"></i>
+                </span>
+                <span>Add a tag</span>
+              </button>
+            </section>
+          </section>
+          <section class="tags has-addons is-centered mb-4">
+            <p class="control">
+              <span class="tag is-info">Tags available :</span>
+            </p>
+            <section id="tag-container"></section>
+          </section>
+          <section class="columns is-multiline" id="lists-container">
+            <!-- Les listes seront ajoutées ici -->
+          </section>
         </section>
+      </section>
     </section>
 
     <!-- Modals -->
     <section class="modal" id="addListModal">
-        <section class="modal-background"></section>
-        <section class="modal-card">
-            <form method="POST">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Add a list</p>
-                    <button class="delete close" type="button" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                    <section class="field">
-                        <label class="label">Name</label>
-                        <section class="control">
-                            <input type="text" class="input" name="title" placeholder="List name" required>
-                        </section>
-                    </section>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success">Save changes</button>
-                    <button class="button close" type="button">Cancel</button>
-                </footer>
-            </form>
-        </section>
+      <section class="modal-background"></section>
+      <section class="modal-card">
+        <form method="POST">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add a list</p>
+            <button
+              class="delete close"
+              type="button"
+              aria-label="close"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <section class="field">
+              <label class="label">Name</label>
+              <section class="control">
+                <input
+                  type="text"
+                  class="input"
+                  name="title"
+                  placeholder="List name"
+                  required
+                />
+              </section>
+            </section>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button close" type="button">Cancel</button>
+          </footer>
+        </form>
+      </section>
     </section>
 
     <section class="modal" id="addCardModal">
-        <section class="modal-background"></section>
-        <section class="modal-card">
-            <form method="POST">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Add a card</p>
-                    <button class="delete close" type="button" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                    <section class="field">
-                        <input type="hidden" name="list_id" value="">
-                        <label class="label">Name</label>
-                        <section class="control">
-                            <input type="text" class="input" name="content" placeholder="Card name" required>
-                        </section>
-                        <label class="label">Tag</label>
-                        <section class="control">
-                            <section class="select">
-                                <select aria-label="select-tag" name="selectedTag">
-                                    <option value="">none</option>
-                                    <!-- Les options seront ajoutées dynamiquement via JavaScript -->
-                                </select>
-                            </section>
-                        </section>
-                    </section>
+      <section class="modal-background"></section>
+      <section class="modal-card">
+        <form method="POST">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add a card</p>
+            <button
+              class="delete close"
+              type="button"
+              aria-label="close"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <section class="field">
+              <input type="hidden" name="list_id" value="" />
+              <label class="label">Name</label>
+              <section class="control">
+                <input
+                  type="text"
+                  class="input"
+                  name="content"
+                  placeholder="Card name"
+                  required
+                />
+              </section>
+              <label class="label">Tag</label>
+              <section class="control">
+                <section class="select">
+                  <select aria-label="select-tag" name="selectedTag">
+                    <option value="">none</option>
+                    <!-- Les options seront ajoutées dynamiquement via JavaScript -->
+                  </select>
                 </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success">Save changes</button>
-                    <button class="button close" type="button">Cancel</button>
-                </footer>
-            </form>
-        </section>
+              </section>
+            </section>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button close" type="button">Cancel</button>
+          </footer>
+        </form>
+      </section>
     </section>
 
     <section class="modal" id="addTagModal">
-        <section class="modal-background"></section>
-        <section class="modal-card">
-            <form method="POST">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Add a Tag</p>
-                    <button class="delete close" type="button" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                    <section class="field">
-                        <label class="label">Tag name</label>
-                        <section class="control">
-                            <input type="text" class="input" name="name" placeholder="Tag name" required>
-                        </section>
-                    </section>
-                    <section class="field">
-                        <label class="label">Color</label>
-                        <section class="control">
-                            <input aria-label="color" type="color" class="input" name="color" value="" required>
-                        </section>
-                    </section>
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success">Save changes</button>
-                    <button class="button close" type="button">Cancel</button>
-                </footer>
-            </form>
-        </section>
+      <section class="modal-background"></section>
+      <section class="modal-card">
+        <form method="POST">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add a Tag</p>
+            <button
+              class="delete close"
+              type="button"
+              aria-label="close"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <section class="field">
+              <label class="label">Tag name</label>
+              <section class="control">
+                <input
+                  type="text"
+                  class="input"
+                  name="name"
+                  placeholder="Tag name"
+                  required
+                />
+              </section>
+            </section>
+            <section class="field">
+              <label class="label">Color</label>
+              <section class="control">
+                <input
+                  aria-label="color"
+                  type="color"
+                  class="input"
+                  name="color"
+                  value="#000000"
+                  required
+                />
+              </section>
+            </section>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button close" type="button">Cancel</button>
+          </footer>
+        </form>
+      </section>
     </section>
 
     <section class="modal" id="editTagModal">
-        <section class="modal-background"></section>
-        <section class="modal-card">
-            <form id="editTagForm" method="POST">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Modify a tag</p>
-                    <button class="delete close" type="button" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                    <section class="field">
-                        <label class="label">Tag name</label>
-                        <section class="control">
-                            <input type="text" class="input" name="name" placeholder="Tag name" required>
-                        </section>
-                    </section>
-                    <section class="field">
-                        <label class="label">Color</label>
-                        <section class="control">
-                            <input aria-label="color" type="color" class="input" name="color" value="" required>
-                        </section>
-                    </section>
-                    <input type="hidden" name="id" value="">
-                </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success">Save changes</button>
-                    <button class="button close" type="button">Cancel</button>
-                    <button class="button is-danger" id="deleteTagButton" type="button">Delete Tag</button>
-                </footer>
-            </form>
-        </section>
+      <section class="modal-background"></section>
+      <section class="modal-card">
+        <form id="editTagForm" method="POST">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Modify a tag</p>
+            <button
+              class="delete close"
+              type="button"
+              aria-label="close"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <section class="field">
+              <label class="label">Tag name</label>
+              <section class="control">
+                <input
+                  type="text"
+                  class="input"
+                  name="name"
+                  placeholder="Tag name"
+                  required
+                />
+              </section>
+            </section>
+            <section class="field">
+              <label class="label">Color</label>
+              <section class="control">
+                <input
+                  aria-label="color"
+                  type="color"
+                  class="input"
+                  name="color"
+                  value="#000000"
+                  required
+                />
+              </section>
+            </section>
+            <input type="hidden" name="id" value="" />
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button close" type="button">Cancel</button>
+            <button class="button is-danger" id="deleteTagButton" type="button">
+              Delete Tag
+            </button>
+          </footer>
+        </form>
+      </section>
     </section>
 
     <section class="modal" id="editCardModal">
-        <section class="modal-background"></section>
-        <section class="modal-card">
-            <form method="POST">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Modify a card</p>
-                    <button class="delete close" type="button" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                    <section class="field">
-                        <input type="hidden" name="card-id" value="">
-                        <label class="label">Name</label>
-                        <section class="control">
-                            <input type="text" class="input" name="content" placeholder="Card name" required>
-                        </section>
-                        <label class="label">Tag</label>
-                        <section class="control">
-                            <section class="select">
-                                <select aria-label="select-tag" name="selectedTag">
-                                    <option value="">none</option>
-                                    <!-- Les options seront ajoutées dynamiquement via JavaScript -->
-                                </select>
-                            </section>
-                        </section>
-                    </section>
+      <section class="modal-background"></section>
+      <section class="modal-card">
+        <form method="POST">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Modify a card</p>
+            <button
+              class="delete close"
+              type="button"
+              aria-label="close"
+            ></button>
+          </header>
+          <section class="modal-card-body">
+            <section class="field">
+              <input type="hidden" name="card-id" value="" />
+              <label class="label">Name</label>
+              <section class="control">
+                <input
+                  type="text"
+                  class="input"
+                  name="content"
+                  placeholder="Card name"
+                  required
+                />
+              </section>
+              <label class="label">Tag</label>
+              <section class="control">
+                <section class="select">
+                  <select aria-label="select-tag" name="selectedTag">
+                    <option value="">none</option>
+                    <!-- Les options seront ajoutées dynamiquement via JavaScript -->
+                  </select>
                 </section>
-                <footer class="modal-card-foot">
-                    <button class="button is-success">Save changes</button>
-                    <button class="button close" type="button">Cancel</button>
-                </footer>
-            </form>
-        </section>
+              </section>
+            </section>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button close" type="button">Cancel</button>
+          </footer>
+        </form>
+      </section>
     </section>
 
     <template id="tag-template">
-        <section class="tag">text</section>
+      <section class="tag">text</section>
     </template>
 
     <script type="module" src="/assets/js/kanban.js"></script>
-</body>
+  </body>
 </html>
