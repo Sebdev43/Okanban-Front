@@ -61,6 +61,11 @@ async function handleAddCardForm() {
     event.preventDefault();
     const data = new FormData(addCardForm);
     const cardData = Object.fromEntries(data.entries());
+    
+    if (cardData.selectedTag === "") {
+      delete cardData.selectedTag;
+    }
+
     await createCard(cardData);
     window.location.reload();
   });
@@ -73,17 +78,25 @@ async function handleEditCardForm() {
     const data = new FormData(editCardForm);
 
     const cardId = data.get("card-id");
+    const listId = data.get("list_id");
 
     if (!cardId) {
       console.error("Card ID is missing");
       return;
     }
-    const cardData = Object.fromEntries(data.entries());
 
-    await updateCard(cardId, cardData);
+    const cardData = Object.fromEntries(data.entries());
+    delete cardData['card-id']; 
+
+    if (cardData.selectedTag === "") {
+      delete cardData.selectedTag;
+    }
+
+    await updateCard(cardId, { ...cardData, list_id: listId }); 
     window.location.reload();
   });
 }
+
 
 async function handleDeleteCard(event) {
   const cardElement = event.currentTarget.closest(".box");

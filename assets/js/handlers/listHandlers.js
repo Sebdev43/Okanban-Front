@@ -31,7 +31,9 @@ async function handleEditListForm() {
       event.preventDefault();
       const data = new FormData(form);
       const listId = data.get("list-id");
-      await updateList(listId, Object.fromEntries(data.entries()));
+      const listData = Object.fromEntries(data.entries());
+      delete listData['list-id']; 
+      await updateList(listId, listData);
       window.location.reload();
     });
   });

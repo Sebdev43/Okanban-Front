@@ -60,7 +60,10 @@ async function handleEditTagForm() {
     event.preventDefault();
     const data = new FormData(editTagForm);
     const tagId = data.get("id");
-    await updateTag(tagId, Object.fromEntries(data.entries()));
+    const tagData = Object.fromEntries(data.entries());
+    delete tagData.id;
+    
+    await updateTag(tagId, tagData);
     window.location.reload(); // Refresh to load updated tag
   });
 }
